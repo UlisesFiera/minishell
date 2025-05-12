@@ -8,6 +8,7 @@ STD_FLAGS				= -Wall -Wextra -Werror -lreadline
 
 SRCS					= src/main.c \
 						  src/prompt.c \
+						  src/parsing.c \
 
 OBJS					= ${SRCS:.c=.o}
 
