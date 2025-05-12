@@ -4,11 +4,13 @@ CC						= cc
 
 LIBFT					= ./libft/libft.a
 
-STD_FLAGS				= -Wall -Wextra -Werror -lreadline
+STD_FLAGS 				= -Wall -Wextra -Werror -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include -lreadline
 
 SRCS					= src/main.c \
-						  src/prompt.c \
+						  src/read_input.c \
 						  src/parsing.c \
+						  src/init_data.c \
+						  src/free_data.c \
 
 OBJS					= ${SRCS:.c=.o}
 

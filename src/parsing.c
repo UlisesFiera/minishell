@@ -65,24 +65,26 @@ int	exec_count_function(char *input)
 	return (exec_count);
 }
 
-void	parse_input(char *input)
+void	parse_input(t_gen_data *data)
 {
-	char	**executables;
 	int		exec_count;
 	int		index;
 	int		i;
 
-	exec_count = exec_count_function(input);
-	executables = malloc(sizeof(char *) * (exec_count + 1));
-	if (!executables)
+	exec_count = exec_count_function(data->input);
+	data->executables = malloc(sizeof(char *) * (exec_count + 1));
+	if (!data->executables)
+	{
+		free_data(data);
 		return ;
-	executables[exec_count] = NULL;
+	}
+	data->executables[exec_count] = NULL;
 	index = 0;
 	i = 0;
 	while(i < exec_count)
 	{
-		executables[i] = exec_split(input, &index);
-		printf("loop %i %s\n", i, executables[i]);
+		data->executables[i] = exec_split(data->input, &index);
+		printf("loop %i %s\n", i, data->executables[i]);
 		i++;
 	}
 }
