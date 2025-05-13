@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/12 14:05:53 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/13 10:03:02 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,9 @@ void	*init_data(t_gen_data *data);
 void	free_data(t_gen_data *data);
 void	free_exec(t_gen_data *data);
 void	exec_command(t_gen_data *data, char **env);
+int		exec_counter(char *input);
+char	*exec_split(char *input, int *index);
+int		exec_counter(char *input);
+int		find_closing_quote(char *input, int index);
 
 #endif

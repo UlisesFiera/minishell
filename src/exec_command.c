@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	exec_extern(t_gen_data *data, char **env)
+void	exec_env(t_gen_data *data, char **env)
 {
 	(void)data;
 	(void)env;
@@ -33,5 +33,5 @@ void	exec_command(t_gen_data *data, char **env)
 	if (command)
 		exec_mini_env(data);
 	else
-		exec_extern(data, env);
+		exec_env(data, env);
 }

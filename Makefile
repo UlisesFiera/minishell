@@ -12,6 +12,8 @@ SRCS					= src/main.c \
 						  src/init_data.c \
 						  src/free_data.c \
 						  src/exec_command.c \
+						  src/fill_executables.c \
+						  src/quotes_handle.c \
 
 OBJS					= ${SRCS:.c=.o}
 
