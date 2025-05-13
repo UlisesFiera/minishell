@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/12 09:51:33 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:05:53 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,7 @@ char	*read_input(t_gen_data *data);
 void	parse_input(t_gen_data *data);
 void	*init_data(t_gen_data *data);
 void	free_data(t_gen_data *data);
+void	free_exec(t_gen_data *data);
+void	exec_command(t_gen_data *data, char **env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 08:47:54 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/12 09:52:38 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:15:05 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ void	*load_username(t_gen_data *data)
 
 void	*init_data(t_gen_data *data)
 {
-	data->input = malloc(sizeof(char *));
+	data->input = ft_strdup("");
 	if (!data->input)
 		return (NULL);
+	data->input[0] = '\0'; 
 	if (!load_username(data))
 		return (NULL);
+	data->executables = NULL;
 	return (data);
 }
