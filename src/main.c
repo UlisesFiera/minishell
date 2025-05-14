@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:08:06 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/12 14:17:26 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:57:54 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,13 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 
 	data = malloc(sizeof(t_gen_data));
-	if (!data)
-		return (1);
-	if (!init_data(data))
-	{
-		free_data(data);
-		free(data);
-		return (1);
-	}
+	init_data(data);
 	signal(SIGINT, signal_handler); // we override the SIGINT (ctrl-c) functionallity with our own, so we can get a new prompt
 	read_history(".user_history");
-	while (data->input)
+	while (data->input) // we loop until the input it's NULL on error or by pressing ctrl-d
 	{
 		data->input = read_input(data); // get the user input and add it to history
-		if (data->input)
+		if (data->input && *data->input != '\0')
 		{
 			parse_input(data);
 			exec_command(data, env);

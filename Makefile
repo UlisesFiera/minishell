@@ -14,6 +14,16 @@ SRCS					= src/main.c \
 						  src/exec_command.c \
 						  src/fill_executables.c \
 						  src/quotes_handle.c \
+						  src/ft_get_path.c \
+						  src/ft_free_tab.c \
+						  src/ft_get_env.c \
+						  src/ft_strcmp.c \
+						  src/redirection/redirections.c \
+						  src/redirection/append.c \
+						  src/redirection/here.c \
+						  src/redirection/to_input.c \
+						  src/redirection/to_output.c \
+
 
 OBJS					= ${SRCS:.c=.o}
 

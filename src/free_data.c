@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 09:24:20 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/12 11:23:11 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:02:33 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	free_exec(t_gen_data *data)
 		free(data->executables);
 		data->executables = NULL;
 	}
+	data->pipe_flag = 0;
 }
 
 void	free_data(t_gen_data *data)

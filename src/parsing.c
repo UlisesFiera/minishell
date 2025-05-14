@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+void	set_pipe_flag(t_gen_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->executables[i])
+	{
+		if (!strcmp(data->executables[i], "|"))
+			data->pipe_flag = 1;
+		i++;
+	}
+}
+
 void	parse_input(t_gen_data *data)
 {
 	int		exec_count;
@@ -28,7 +41,7 @@ void	parse_input(t_gen_data *data)
 	while(i < exec_count)
 	{
 		data->executables[i] = exec_split(data->input, &index);
-		printf("%s\n", data->executables[i]);
 		i++;
 	}
+	set_pipe_flag(data);
 }
