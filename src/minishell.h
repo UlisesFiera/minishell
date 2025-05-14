@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/13 17:33:12 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/14 09:47:44 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ char	*ft_get_path(char *cmd, char **env);
 void	ft_free_tab(char **tab);
 char	*ft_getenv(char *env_name, char **env);
 int		ft_strcmp(char *s1, char *s2);
-int		redirect_check(t_gen_data *data);
 
 /* Redirections */
 
-void	exec_to_input(data, index);
-void	exec_to_output(data, index);
-void	exec_append(data, index);
-void	exec_here(data, index);
+int		redirect_check(t_gen_data *data);
+void	exec_to_input(t_gen_data *data, int index);
+void	exec_to_output(t_gen_data *data, int index);
+void	exec_append(t_gen_data *data, int index);
+void	exec_here(t_gen_data *data, int index);
 
 #endif

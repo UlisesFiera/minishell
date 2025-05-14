@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	exec_to_input(data, index)
+void	exec_to_input(t_gen_data *data, int index)
 {
 	(void)data;
 	(void)index;

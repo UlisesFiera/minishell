@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	exec_here(data, index)
+void	exec_here(t_gen_data *data, int index)
 {
 	(void)data;
 	(void)index;

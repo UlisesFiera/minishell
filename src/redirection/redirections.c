@@ -10,17 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	redirect_handler(t_gen_data *data, char *redirection, int index)
 {
-	if (!ft_strcmp(data->executables[i], "<"))
+	if (!ft_strcmp(data->executables[index], redirection))
 		exec_to_input(data, index);
-	else if (!ft_strcmp(data->executables[i], ">"))
+	else if (!ft_strcmp(data->executables[index], redirection))
 		exec_to_output(data, index);
-	else if (!ft_strcmp(data->executables[i], "<<"))
+	else if (!ft_strcmp(data->executables[index], redirection))
 		exec_append(data, index);
-	else if (!ft_strcmp(data->executables[i], ">>")) 
+	else if (!ft_strcmp(data->executables[index], redirection)) 
 		exec_here(data, index);
 }
 
