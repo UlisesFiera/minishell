@@ -1,58 +1,75 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   to_input.c                                         :+:      :+:    :+:   */
+/*   here.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 17:31:51 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/13 17:31:51 by ulfernan         ###   ########.fr       */
+/*   Created: 2025/05/13 17:31:20 by ulfernan          #+#    #+#             */
+/*   Updated: 2025/05/13 17:31:20 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	input_child(char *file, char **commands, char **env, char *cmd_path)
+void	collect_input(int *end, char *delimiter)
 {
-	int	stdin;
-	int	fd;
+	char	*line;
 
-	fd = open(file, O_RDONLY, 0777);
-	stdin = dup(0);
-	dup2(fd, 0);
-	close(fd);
+	line = readline("> ");
+	while (line && ft_strcmp(line, delimiter))
+	{
+		write(end[1], line, ft_strlen(line));
+		write(end[1], "\n", 1);
+		free(line);
+		line = readline("> ");
+	}
+	free(line);
+}
+
+void	heredoc_parent(pid_t pid, int *end, char *cmd_path, char *delimiter)
+{
+	close(end[0]);
+	collect_input(end, delimiter);
+	close(end[1]);
+	waitpid(pid, NULL, 0);
+	free(cmd_path);
+}
+
+void	heredoc_child(int *end, char **commands, char **env, char *cmd_path)
+{
+	close(end[1]);
+	dup2(end[0], 0);
+	close(end[0]);
 	if (execve(cmd_path, commands, env) == -1)
 	{
 		printf("couldn't find command: %s\n", commands[0]);
-		dup2(stdin, 0);
-		close(stdin);
 		free(cmd_path);
 		exit(1);
 	}
 }
 
-void	exec_from_input(t_gen_data *data, char **env, int index)
+void	exec_heredoc(t_gen_data *data, char **env, int index)
 {
 	char	*cmd_path;
-	char	*file;
+	char	*delimiter;
 	char	**clean_commands_array;
+	int		end[2];
 	pid_t	pid;
 
 	cmd_path = ft_get_path(data->executables[0], env);
-	file = data->executables[index + 1];
+	delimiter = data->executables[index + 1];
 	clean_commands_array = array_cleaner(data);
+	pipe(end);
 	pid = fork();
 	if (!pid)
-		input_child(file, clean_commands_array, env, cmd_path);
+		heredoc_child(end, clean_commands_array, env, cmd_path);
 	else if (pid > 0)
-	{
-		wait(NULL);
-		free(cmd_path);
-	}
+		heredoc_parent(pid, end, cmd_path, delimiter);
     else
 	{
 		printf("Fork failed\n");
 		free(cmd_path);
 		data->input = NULL;
-    }
+	}
 }

@@ -1,1 +1,15 @@
 hola xd
+Makefile
+README.md
+hi.txt
+libft
+list.txt
+minishell
+src
+Makefile
+README.md
+hi.txt
+libft
+list.txt
+minishell
+src

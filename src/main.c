@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:08:06 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/14 10:58:32 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/15 08:09:21 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **env)
 	read_history(".user_history");
 	while (data->input) // we loop until the input it's NULL on error or by pressing ctrl-d
 	{
-		data->input = read_input(data); // get the user input and add it to history
+		read_input(data); // get the user input and add it to history
 		if (data->input && *data->input != '\0')
 		{
 			parse_input(data);

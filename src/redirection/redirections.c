@@ -15,14 +15,14 @@
 void	redirect_handler(t_gen_data *data, char *redirection, int index,
 							char **env) // index is where the redirect is
 {
-	if (!ft_strcmp(data->executables[index], redirection))
+	if (!ft_strcmp(redirection, "<"))
 		exec_from_input(data, env, index);
-	else if (!ft_strcmp(data->executables[index], redirection))
-		exec_to_output(data, env);
-	else if (!ft_strcmp(data->executables[index], redirection))
-		exec_append(data, env);
-	else if (!ft_strcmp(data->executables[index], redirection)) 
-		exec_here(data, env);
+	else if (!ft_strcmp(redirection, ">"))
+		exec_to_output(data, env, index);
+	else if (!ft_strcmp(redirection, ">>"))
+		exec_append(data, env, index);
+	else if (!ft_strcmp(redirection, "<<")) 
+		exec_heredoc(data, env, index);
 }
 
 int	redirect_check(t_gen_data *data, char **env)

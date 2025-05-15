@@ -14,41 +14,38 @@
 
 void	execve_handler(char *cmd_path, t_gen_data *data, char **env)
 {
-	int	redir;
-
-	redir = redirect_check(data, env);
-	if (!redir)
+	if (execve(cmd_path, data->executables, env) == -1)
 	{
-		if (execve(cmd_path, data->executables, env) == -1)
-		{
-			printf("couldn't find command: %s\n", data->executables[0]);
-			free(cmd_path);
-			data->input = NULL;
-			exit(1);
-		}
+		printf("couldn't find command: %s\n", data->executables[0]);
+		free(cmd_path);
+		exit(1);
 	}
 }
 
 void	exec_env(t_gen_data *data, char **env)
 {
 	char	*cmd_path;
+	int		redir;
 	pid_t	pid;
 
 	cmd_path = ft_get_path(data->executables[0], env);
-	pid = fork();
-	if (!pid)
-		execve_handler(cmd_path, data, env);
-	else if (pid > 0)
+	redir = redirect_check(data, env);
+	if (!redir)
 	{
-		wait(NULL);
-		free(cmd_path);
+		pid = fork();
+		if (!pid)
+			execve_handler(cmd_path, data, env);
+		else if (pid > 0)
+		{
+			wait(NULL);
+			free(cmd_path);
+		}
+		else
+		{
+			printf("Fork failed\n");
+			free(cmd_path);
+		}
 	}
-    else
-	{
-		printf("Fork failed\n");
-		free(cmd_path);
-		data->input = NULL;
-    }
 }
 
 void	exec_mini_env(t_gen_data *data)

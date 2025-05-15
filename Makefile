@@ -20,7 +20,7 @@ SRCS					= src/main.c \
 						  src/ft_strcmp.c \
 						  src/redirection/redirections.c \
 						  src/redirection/append.c \
-						  src/redirection/here.c \
+						  src/redirection/heredoc.c \
 						  src/redirection/from_input.c \
 						  src/redirection/to_output.c \
 						  src/array_cleaner.c \

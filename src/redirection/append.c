@@ -12,8 +12,43 @@
 
 #include "../minishell.h"
 
-void	exec_append(t_gen_data *data, char **env)
+void	append_child(char *file, char **commands, char **env, char *cmd_path)
 {
-	(void)data;
-	(void)env;
+	int		fd;
+
+	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
+	dup2(fd, 1);
+	close(fd);
+	if (execve(cmd_path, commands, env) == -1)
+	{
+		printf("couldn't find command: %s\n", commands[0]);
+		free(cmd_path);
+		exit(1);
+	}
+}
+
+void	exec_append(t_gen_data *data, char **env, int index)
+{
+	char	*cmd_path;
+	char	*file;
+	char	**clean_commands_array;
+	pid_t	pid;
+
+	cmd_path = ft_get_path(data->executables[0], env);
+	file = data->executables[index + 1];
+	clean_commands_array = array_cleaner(data);
+	pid = fork();
+	if (!pid)
+		append_child(file, clean_commands_array, env, cmd_path);
+	else if (pid > 0)
+	{
+		wait(NULL);
+		free(cmd_path);
+	}
+    else
+	{
+		printf("Fork failed\n");
+		free(cmd_path);
+		data->input = NULL;
+    }
 }
