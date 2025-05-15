@@ -16,7 +16,7 @@ void	execve_handler(char *cmd_path, t_gen_data *data, char **env)
 {
 	int	redir;
 
-	redir = redirect_check(data);
+	redir = redirect_check(data, env);
 	if (!redir)
 	{
 		if (execve(cmd_path, data->executables, env) == -1)
@@ -24,6 +24,7 @@ void	execve_handler(char *cmd_path, t_gen_data *data, char **env)
 			printf("couldn't find command: %s\n", data->executables[0]);
 			free(cmd_path);
 			data->input = NULL;
+			exit(1);
 		}
 	}
 }

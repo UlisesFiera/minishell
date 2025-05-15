@@ -12,8 +12,8 @@
 
 #include "../minishell.h"
 
-void	exec_to_output(t_gen_data *data, int index)
+void	exec_to_output(t_gen_data *data, char **env)
 {
 	(void)data;
-	(void)index;
+	(void)env;
 }

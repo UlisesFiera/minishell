@@ -12,19 +12,20 @@
 
 #include "../minishell.h"
 
-void	redirect_handler(t_gen_data *data, char *redirection, int index)
+void	redirect_handler(t_gen_data *data, char *redirection, int index,
+							char **env) // index is where the redirect is
 {
 	if (!ft_strcmp(data->executables[index], redirection))
-		exec_to_input(data, index);
+		exec_from_input(data, env, index);
 	else if (!ft_strcmp(data->executables[index], redirection))
-		exec_to_output(data, index);
+		exec_to_output(data, env);
 	else if (!ft_strcmp(data->executables[index], redirection))
-		exec_append(data, index);
+		exec_append(data, env);
 	else if (!ft_strcmp(data->executables[index], redirection)) 
-		exec_here(data, index);
+		exec_here(data, env);
 }
 
-int	redirect_check(t_gen_data *data)
+int	redirect_check(t_gen_data *data, char **env)
 {
 	int		i;
 
@@ -36,7 +37,7 @@ int	redirect_check(t_gen_data *data)
 			|| !ft_strcmp(data->executables[i], "<<") 
 			|| !ft_strcmp(data->executables[i], ">>"))
 		{
-			redirect_handler(data, data->executables[i], i);
+			redirect_handler(data, data->executables[i], i, env);
 			return (1);
 		}
 		i++;

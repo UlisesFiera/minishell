@@ -21,8 +21,9 @@ SRCS					= src/main.c \
 						  src/redirection/redirections.c \
 						  src/redirection/append.c \
 						  src/redirection/here.c \
-						  src/redirection/to_input.c \
+						  src/redirection/from_input.c \
 						  src/redirection/to_output.c \
+						  src/array_cleaner.c \
 
 
 OBJS					= ${SRCS:.c=.o}
