@@ -17,6 +17,12 @@ void	input_child(char *file, char **commands, char **env, char *cmd_path)
 	int	stdin;
 	int	fd;
 
+	if (!cmd_path)
+	{
+		printf("couldn't find command: %s\n", commands[0]);
+		free(cmd_path);
+		exit(1);
+	}
 	fd = open(file, O_RDONLY, 0777);
 	stdin = dup(0);
 	dup2(fd, 0);
@@ -53,6 +59,7 @@ void	exec_from_input(t_gen_data *data, char **env, int index)
 	{
 		printf("Fork failed\n");
 		free(cmd_path);
-		data->input = NULL;
+		ft_free_tab(clean_commands_array);
     }
+	ft_free_tab(clean_commands_array);
 }

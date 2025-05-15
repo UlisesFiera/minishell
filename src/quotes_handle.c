@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:56:42 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/13 10:04:28 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:18:01 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	skip_single_quote(char *input, int *i)
 {
 	(*i)++;
-	if (!find_closing_quote(input, *i))
+	if (!find_quote(input, *i))
 	{
 		while (input[*i] != '\0' && input[*i] != '\'')
 			(*i)++;
@@ -25,7 +25,7 @@ void	skip_single_quote(char *input, int *i)
 void	skip_double_quote(char *input, int *i)
 {
 	(*i)++;
-	if (!find_closing_quote(input, *i))
+	if (!find_quote(input, *i))
 	{
 		while (input[*i] != '\0' && input[*i] != '"')
 			(*i)++;

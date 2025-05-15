@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+void	free_arrays(char **right_commands, char **left_commands)
+{
+	free(right_commands);
+	free(left_commands);
+}
+
 char	**array_cleaner_left(t_gen_data *data) // this gives us an array with everything until the special symbol
 {
 	char	**clean_array;
@@ -34,8 +40,6 @@ char	**array_cleaner_left(t_gen_data *data) // this gives us an array with every
 	return (clean_array);
 }
 
-
-
 char	**array_cleaner_right(t_gen_data *data, int optcode) // this gives us an array with everything from the special symbol
 {
 	char	**clean_array;
@@ -53,20 +57,15 @@ char	**array_cleaner_right(t_gen_data *data, int optcode) // this gives us an ar
 		i++;
 	n = i;
 	j = 0;
-	while (data->executables[i])
-	{
-		i++;
+	while (data->executables[i++])
 		j++;
-	}
 	clean_array = malloc(sizeof(char *) * (j + 1));
 	clean_array[j] = NULL;
 	i = 0;
 	while (data->executables[n])
-	{
-		clean_array[i] = data->executables[n];
-		i++;
-		n++;
-	}
+		clean_array[i++] = data->executables[n++];
+	while (data->executables[n])
+		clean_array[i++] = data->executables[n++];
 	return (clean_array);
 }
 
@@ -82,33 +81,20 @@ char	**array_cleaner(t_gen_data *data)
 	right_commands = array_cleaner_right(data, 1);
 	size = 0;
 	i = 0;
-	while (left_commands[i])
-	{
-		i++;
+	while (left_commands[i++])
 		size++;
-	}
 	i = 0;
-	while (right_commands[i])
-	{
-		i++;
+	while (right_commands[i++])
 		size++;
-	}
 	clean_array = malloc(sizeof(char *) * (size + 1));
 	clean_array[size] = NULL;
 	i = 0;
 	size = 0;
 	while (left_commands[i])
-	{
-		clean_array[size] = left_commands[i];
-		size++;
-		i++;
-	}
+		clean_array[size++] = left_commands[i++];
 	i = 0;
 	while (right_commands[i])
-	{
-		clean_array[size] = right_commands[i];
-		size++;
-		i++;
-	}
+		clean_array[size++] = right_commands[i++];
+	free_arrays(right_commands, left_commands);
 	return (clean_array);
 }

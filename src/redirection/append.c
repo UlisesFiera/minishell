@@ -16,6 +16,12 @@ void	append_child(char *file, char **commands, char **env, char *cmd_path)
 {
 	int		fd;
 
+	if (!cmd_path)
+	{
+		printf("couldn't find command: %s\n", commands[0]);
+		free(cmd_path);
+		exit(1);
+	}
 	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	dup2(fd, 1);
 	close(fd);
@@ -48,7 +54,8 @@ void	exec_append(t_gen_data *data, char **env, int index)
     else
 	{
 		printf("Fork failed\n");
+		free(clean_commands_array);
 		free(cmd_path);
-		data->input = NULL;
     }
+	free(clean_commands_array);
 }

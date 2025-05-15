@@ -14,6 +14,12 @@
 
 void	execve_handler(char *cmd_path, t_gen_data *data, char **env)
 {
+	if (!cmd_path)
+	{
+		printf("couldn't find command: %s\n", data->executables[0]);
+		free(cmd_path);
+		exit(1);
+	}
 	if (execve(cmd_path, data->executables, env) == -1)
 	{
 		printf("couldn't find command: %s\n", data->executables[0]);
@@ -36,16 +42,14 @@ void	exec_env(t_gen_data *data, char **env)
 		if (!pid)
 			execve_handler(cmd_path, data, env);
 		else if (pid > 0)
-		{
 			wait(NULL);
-			free(cmd_path);
-		}
 		else
 		{
 			printf("Fork failed\n");
 			free(cmd_path);
 		}
 	}
+	free(cmd_path);
 }
 
 void	exec_mini_env(t_gen_data *data)

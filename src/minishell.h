@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/15 09:36:21 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:18:07 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	exec_command(t_gen_data *data, char **env);
 int		exec_counter(char *input);
 char	*exec_split(char *input, int *index);
 int		exec_counter(char *input);
-int		find_closing_quote(char *input, int index);
+int		find_quote(char *input, int index);
 char	*ft_get_path(char *cmd, char **env);
 void	ft_free_tab(char **tab);
 char	*ft_getenv(char *env_name, char **env);

@@ -1,0 +1,135 @@
+total 33
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 11:47 libft
+-rwxrwxrwx 1 root root     0 May 15  2025 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28088 May 15 11:47 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 33
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 11:47 libft
+-rwxrwxrwx 1 root root   405 May 15 11:50 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28088 May 15 11:47 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 37
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 11:47 libft
+-rwxrwxrwx 1 root root   810 May 15 11:51 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28088 May 15 11:47 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 37
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 11:47 libft
+-rwxrwxrwx 1 root root  1215 May 15 11:51 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28088 May 15 11:47 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 37
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 11:56 libft
+-rwxrwxrwx 1 root root  1620 May 15 11:53 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28088 May 15 11:56 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 37
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 11:58 libft
+-rwxrwxrwx 1 root root  2025 May 15 11:56 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28088 May 15 11:58 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 37
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 11:59 libft
+-rwxrwxrwx 1 root root  2430 May 15 11:58 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28088 May 15 11:59 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 37
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 12:00 libft
+-rwxrwxrwx 1 root root  2835 May 15 11:59 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28088 May 15 12:00 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 37
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 12:00 libft
+-rwxrwxrwx 1 root root  3240 May 15 12:00 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28088 May 15 12:00 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 37
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 13:04 libft
+-rwxrwxrwx 1 root root  3645 May 15 13:01 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28088 May 15 13:04 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 37
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 13:05 libft
+-rwxrwxrwx 1 root root  4050 May 15 13:04 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28088 May 15 13:05 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 41
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 13:06 libft
+-rwxrwxrwx 1 root root  4455 May 15 13:06 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28088 May 15 13:07 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 41
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 13:08 libft
+-rwxrwxrwx 1 root root  4860 May 15 13:07 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28088 May 15 13:08 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 41
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 13:16 libft
+-rwxrwxrwx 1 root root  5265 May 15 13:08 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28088 May 15 13:16 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 41
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 15 13:36 libft
+-rwxrwxrwx 1 root root  5670 May 15 13:17 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28120 May 15 13:36 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src

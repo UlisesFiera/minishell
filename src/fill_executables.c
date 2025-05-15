@@ -6,13 +6,13 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:39:09 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/13 10:05:19 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:17:12 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	find_closing_quote(char *input, int index) // we check if the quote is grouping a command or if it's single
+int	find_quote(char *input, int index) // we check if the quote is grouping a command or if it's single
 {
 	while (input[index])
 	{
@@ -32,8 +32,7 @@ int	exec_size(char *input, int i, int *quotes)
 		i++;
 	while (input[i] != '\0' && input[i] != ' ' && !*quotes)
 	{
-		if ((input[i] == '"' || input[i] == '\'') 
-				&& !find_closing_quote(input, i + 1))
+		if ((input[i] == '"' || input[i] == '\'') && !find_quote(input, i + 1))
 		{
 			*quotes = 1;
 			i++;
