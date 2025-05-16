@@ -24,6 +24,8 @@ SRCS					= src/main.c \
 						  src/redirection/from_input.c \
 						  src/redirection/to_output.c \
 						  src/array_cleaner.c \
+						  src/exec_pipe.c \
+						  src/file_finder.c \
 
 
 OBJS					= ${SRCS:.c=.o}

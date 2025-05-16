@@ -18,6 +18,21 @@ void	free_arrays(char **right_commands, char **left_commands)
 	free(left_commands);
 }
 
+void	fill_arrays(char **clean_array, char **left_cmd, char **right_cmd)
+{
+	int	i;
+	int	size;
+
+	i = 0;
+	size = 0;
+	while (left_cmd[i])
+		clean_array[size++] = left_cmd[i++];
+	i = 0;
+	while (right_cmd[i])
+		clean_array[size++] = right_cmd[i++];
+	free_arrays(right_cmd, left_cmd);
+}
+
 char	**array_cleaner_left(t_gen_data *data) // this gives us an array with everything until the special symbol
 {
 	char	**clean_array;
@@ -88,13 +103,6 @@ char	**array_cleaner(t_gen_data *data)
 		size++;
 	clean_array = malloc(sizeof(char *) * (size + 1));
 	clean_array[size] = NULL;
-	i = 0;
-	size = 0;
-	while (left_commands[i])
-		clean_array[size++] = left_commands[i++];
-	i = 0;
-	while (right_commands[i])
-		clean_array[size++] = right_commands[i++];
-	free_arrays(right_commands, left_commands);
+	fill_arrays(clean_array, left_commands, right_commands);
 	return (clean_array);
 }

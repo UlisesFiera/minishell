@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:08:06 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/15 08:09:21 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/16 16:55:18 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ int	main(int argc, char **argv, char **env)
 		if (data->input && *data->input != '\0')
 		{
 			parse_input(data);
-			exec_command(data, env);
+			if (data->pipe_flag)
+				exec_pipe(data, env);
+			else
+				exec_command(data, env);
 		}
 		free_exec(data);
 	}

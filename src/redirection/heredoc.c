@@ -74,8 +74,6 @@ void	exec_heredoc(t_gen_data *data, char **env, int index)
 	{
 		printf("Fork failed\n");
 		free(cmd_path);
-		ft_free_tab(clean_commands_array);
 	}
 	free(cmd_path);
-	ft_free_tab(clean_commands_array);
 }

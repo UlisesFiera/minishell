@@ -133,3 +133,21 @@ drwxrwxrwx 1 root root   512 May 15 13:36 libft
 -rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
 -rwxrwxrwx 1 root root 28120 May 15 13:36 minishell
 drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 41
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 16 15:09 libft
+-rwxrwxrwx 1 root root  6075 May 15 13:36 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28152 May 16 15:10 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src
+total 41
+-rwxrwxrwx 1 root root  1101 May 15 11:43 Makefile
+-rwxrwxrwx 1 root root   123 May 14 12:09 README.md
+-rwxrwxrwx 1 root root   118 May 15 11:43 hi.txt
+drwxrwxrwx 1 root root   512 May 16 15:09 libft
+-rwxrwxrwx 1 root root  6480 May 16 15:10 list
+-rwxrwxrwx 1 root root   716 May 15 11:50 list.txt
+-rwxrwxrwx 1 root root 28152 May 16 15:10 minishell
+drwxrwxrwx 1 root root   512 May 15 11:43 src

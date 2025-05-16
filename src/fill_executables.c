@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:39:09 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/15 14:17:12 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:31:01 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,8 @@ int	exec_size(char *input, int i, int *quotes)
 		if ((input[i] == '"' || input[i] == '\'') && !find_quote(input, i + 1))
 		{
 			*quotes = 1;
-			i++;
-			while (input[i] != '\0' && input[i] != '"' && input[i] != '\'')
-			{
+			while (input[++i] != '\0' && input[i] != '"' && input[i] != '\'')
 				size++;
-				i++;
-			}
 			if (input[i] == '"' || input[i] == '\'')
 				i++;
 		}

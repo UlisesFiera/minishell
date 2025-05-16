@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/15 14:18:07 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:12:16 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ char	**array_cleaner_left(t_gen_data *data);
 char	**array_cleaner_right(t_gen_data *data, int optcode);
 char	**array_cleaner(t_gen_data *data);
 void	reset_prompt(void);
+void	exec_pipe(t_gen_data *data, char **env);
+int		file_finder(char **command_array);
 
 /* Redirections */
 
