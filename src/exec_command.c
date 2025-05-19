@@ -52,20 +52,20 @@ void	exec_env(t_gen_data *data, char **env)
 	free(cmd_path);
 }
 
-void	exec_mini_env(t_gen_data *data)
+void	exec_builts(t_gen_data *data)
 {
 	(void)data;
 }
 
 void	exec_command(t_gen_data *data, char **env)
 {
-	char	*mini_env;
+	char	*builts;
 	char	*command;
 
-	mini_env = "echo;cd;pwd;export;unset;env;exit";
-	command = ft_strnstr(mini_env, data->executables[0], ft_strlen(mini_env));
+	builts = "echo;cd;pwd;export;unset;env;exit";
+	command = ft_strnstr(builts, data->executables[0], ft_strlen(builts));
 	if (command)
-		exec_mini_env(data);
+		exec_builts(data);
 	else
 		exec_env(data, env);
 }

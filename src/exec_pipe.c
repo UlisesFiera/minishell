@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	execute(char **commands, char **env)
+void	pipe_execute(char **commands, char **env)
 {
 	char	*cmd_path;
 
@@ -31,25 +31,36 @@ void	execute(char **commands, char **env)
 	}
 }
 
-void	child(int *end, t_gen_data *data, char **env)
+void	pipe_child(int *end, t_gen_data *data, char **env)
 {
 	char	**array_left;
 
-	array_left = array_cleaner_left(data);
+	array_left = array_cleaner_left(data, "|");
 	dup2(end[1], 1);
 	close(end[0]);
-	execute(array_left, env);
+	pipe_execute(array_left, env);
 }
 
-void	parent(int *end, t_gen_data *data, char **env)
+void	pipe_parent(int *end, t_gen_data *data, char **env) // we need to fork again because otherwise we'd terminate the shell after using execve in the parent
 {
 	char	**array_right;
+	pid_t	pid2;
 
-	array_right = array_cleaner_right(data, 0);
+	array_right = array_cleaner_right(data, 0, "|");
 	wait(NULL);
-	dup2(end[0], 0);
-	close(end[1]);
-	execute(array_right, env);
+	pid2 = fork();
+	if (pid2 == 0)
+	{
+		dup2(end[0], 0);
+		close(end[1]);
+		pipe_execute(array_right, env);
+	}
+	else
+	{
+		close(end[0]);
+		close(end[1]);
+		wait(NULL);
+	}
 }
 
 void	exec_pipe(t_gen_data *data, char **env)
@@ -63,7 +74,7 @@ void	exec_pipe(t_gen_data *data, char **env)
 	if (pid1 < 0)
 		ft_printf("fork failure\n");
 	if (!pid1)
-		child(end, data, env);
+		pipe_child(end, data, env);
 	else
-		parent(end, data, env);
+		pipe_parent(end, data, env);
 }

@@ -61,7 +61,7 @@ void	exec_heredoc(t_gen_data *data, char **env, int index)
 
 	cmd_path = ft_get_path(data->executables[0], env);
 	delimiter = data->executables[index + 1];
-	clean_commands_array = array_cleaner(data);
+	clean_commands_array = array_cleaner(data, "<<");
 	pipe(end);
 	collect_input(end, delimiter);
 	close(end[1]);

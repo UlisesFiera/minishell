@@ -33,16 +33,14 @@ void	fill_arrays(char **clean_array, char **left_cmd, char **right_cmd)
 	free_arrays(right_cmd, left_cmd);
 }
 
-char	**array_cleaner_left(t_gen_data *data) // this gives us an array with everything until the special symbol
+char	**array_cleaner_left(t_gen_data *data, char *symbol) // this gives us an array with everything until the special symbol
 {
 	char	**clean_array;
-	char	*symbol;
 	int		i; // where the symbol is, and hence the number of args
 	int		j;
 
-	symbol = "<;<<;>;>>;|";
 	i = 0;
-	while (!(ft_strnstr(symbol, data->executables[i], ft_strlen(symbol))))
+	while (ft_strcmp(symbol, data->executables[i]))
 		i++;
 	clean_array = malloc(sizeof(char *) * (i + 1));
 	clean_array[i] = NULL;
@@ -55,17 +53,15 @@ char	**array_cleaner_left(t_gen_data *data) // this gives us an array with every
 	return (clean_array);
 }
 
-char	**array_cleaner_right(t_gen_data *data, int optcode) // this gives us an array with everything from the special symbol
+char	**array_cleaner_right(t_gen_data *data, int optcode, char *symbol) // this gives us an array with everything from the special symbol
 {
 	char	**clean_array;
-	char	*symbol;
 	int		i;
 	int		j;
 	int		n;
 
-	symbol = "<;<<;>;>>;|";
 	i = 0;
-	while (!(ft_strnstr(symbol, data->executables[i], ft_strlen(symbol))))
+	while (ft_strcmp(symbol, data->executables[i]))
 		i++;
 	i++;
 	if (optcode == 1) //optcode will be 1 when the first arg after the symbol is a file, in that case we skip it
@@ -84,7 +80,7 @@ char	**array_cleaner_right(t_gen_data *data, int optcode) // this gives us an ar
 	return (clean_array);
 }
 
-char	**array_cleaner(t_gen_data *data)
+char	**array_cleaner(t_gen_data *data, char *symbol)
 {
 	char	**clean_array;
 	char	**left_commands;
@@ -92,8 +88,8 @@ char	**array_cleaner(t_gen_data *data)
 	int		size;
 	int		i;
 
-	left_commands = array_cleaner_left(data);
-	right_commands = array_cleaner_right(data, 1);
+	left_commands = array_cleaner_left(data, symbol);
+	right_commands = array_cleaner_right(data, 1, symbol);
 	size = 0;
 	i = 0;
 	while (left_commands[i++])

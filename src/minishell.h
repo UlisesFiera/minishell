@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/16 17:12:16 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:07:34 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ char	*ft_get_path(char *cmd, char **env);
 void	ft_free_tab(char **tab);
 char	*ft_getenv(char *env_name, char **env);
 int		ft_strcmp(char *s1, char *s2);
-char	**array_cleaner_left(t_gen_data *data);
-char	**array_cleaner_right(t_gen_data *data, int optcode);
-char	**array_cleaner(t_gen_data *data);
+char	**array_cleaner_left(t_gen_data *data, char *symbol);
+char	**array_cleaner_right(t_gen_data *data, int optcode, char *symbol);
+char	**array_cleaner(t_gen_data *data, char *symbol);
 void	reset_prompt(void);
 void	exec_pipe(t_gen_data *data, char **env);
 int		file_finder(char **command_array);

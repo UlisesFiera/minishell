@@ -42,7 +42,7 @@ void	exec_to_output(t_gen_data *data, char **env, int index)
 
 	cmd_path = ft_get_path(data->executables[0], env);
 	file = data->executables[index + 1];
-	clean_commands_array = array_cleaner(data);
+	clean_commands_array = array_cleaner(data, ">");
 	pid = fork();
 	if (!pid)
 		output_child(file, clean_commands_array, env, cmd_path);
