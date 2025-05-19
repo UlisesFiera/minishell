@@ -33,21 +33,37 @@ void	fill_arrays(char **clean_array, char **left_cmd, char **right_cmd)
 	free_arrays(right_cmd, left_cmd);
 }
 
-char	**array_cleaner_left(t_gen_data *data, char *symbol) // this gives us an array with everything until the special symbol
+char	**array_cleaner_left(t_gen_data *data) // we get an array with everything but redirectors, until pipe
 {
 	char	**clean_array;
-	int		i; // where the symbol is, and hence the number of args
+	char	*symbol;
+	int		count;
+	int		i;
 	int		j;
 
+	symbol = "<;<<;>;>>";
+	count = 0;
 	i = 0;
-	while (ft_strcmp(symbol, data->executables[i]))
-		i++;
-	clean_array = malloc(sizeof(char *) * (i + 1));
-	clean_array[i] = NULL;
-	j = 0;
-	while (j < i)
+	while (data->executables[i] && data->executables[i][0] != '|')
 	{
-		clean_array[j] = data->executables[j];
+		while (ft_strnstr(symbol, data->executables[i], ft_strlen(symbol))) // we skip 2 because whats right after a symbol is always a file, hence not a valid arg for the command
+			i += 2;
+		if ((data->executables[i]))
+		{
+			count++;
+			i++;
+		}
+	}
+	clean_array = malloc(sizeof(char *) * (count + 1));
+	clean_array[count] = NULL;
+	i = 0;
+	j = 0;
+	while (i < count)
+	{
+		while (ft_strnstr(symbol, data->executables[i], ft_strlen(symbol)))
+			i += 2;
+		clean_array[j] = data->executables[i];
+		i++;
 		j++; 
 	}
 	return (clean_array);
@@ -80,6 +96,7 @@ char	**array_cleaner_right(t_gen_data *data, int optcode, char *symbol) // this 
 	return (clean_array);
 }
 
+/*
 char	**array_cleaner(t_gen_data *data, char *symbol)
 {
 	char	**clean_array;
@@ -102,3 +119,4 @@ char	**array_cleaner(t_gen_data *data, char *symbol)
 	fill_arrays(clean_array, left_commands, right_commands);
 	return (clean_array);
 }
+*/

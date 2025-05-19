@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/16 19:07:34 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:44:41 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_gen_data
 	char	*input;
 	char	**executables;
 	int		pipe_flag;
+	int		input_fd;
+	int		output_fd;
 } 	t_gen_data;
 
 /* Shell functionalities */
@@ -56,7 +58,7 @@ char	*ft_get_path(char *cmd, char **env);
 void	ft_free_tab(char **tab);
 char	*ft_getenv(char *env_name, char **env);
 int		ft_strcmp(char *s1, char *s2);
-char	**array_cleaner_left(t_gen_data *data, char *symbol);
+char	**array_cleaner_left(t_gen_data *data);
 char	**array_cleaner_right(t_gen_data *data, int optcode, char *symbol);
 char	**array_cleaner(t_gen_data *data, char *symbol);
 void	reset_prompt(void);
@@ -65,10 +67,10 @@ int		file_finder(char **command_array);
 
 /* Redirections */
 
-int		redirect_check(t_gen_data *data, char **env);
-void	exec_from_input(t_gen_data *data, char **env, int index);
-void	exec_to_output(t_gen_data *data, char **env, int index);
-void	exec_append(t_gen_data *data, char **env, int index);
-void	exec_heredoc(t_gen_data *data, char **env, int index);
+int		redirect(t_gen_data *data, char **env);
+void	exec_from_input(t_gen_data *data, int index, char *cmd_path);
+void	exec_to_output(t_gen_data *data, int index, char *cmd_path);
+void	exec_append(t_gen_data *data, int index, char *cmd_path);
+void	exec_heredoc(t_gen_data *data, int index, char *cmd_path);
 
 #endif

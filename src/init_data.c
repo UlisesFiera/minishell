@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 08:47:54 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/13 16:03:08 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:39:39 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	*init_data_handler(t_gen_data *data)
 		return (NULL);
 	data->executables = NULL;
 	data->pipe_flag = 0;
+	data->input_fd = -1;
+	data->output_fd = -1;
 	return (data);
 }
 

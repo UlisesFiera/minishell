@@ -35,7 +35,7 @@ void	exec_env(t_gen_data *data, char **env)
 	pid_t	pid;
 
 	cmd_path = ft_get_path(data->executables[0], env);
-	redir = redirect_check(data, env);
+	redir = redirect(data, env);
 	if (!redir)
 	{
 		pid = fork();

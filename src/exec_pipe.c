@@ -35,7 +35,7 @@ void	pipe_child(int *end, t_gen_data *data, char **env)
 {
 	char	**array_left;
 
-	array_left = array_cleaner_left(data, "|");
+	array_left = array_cleaner_left(data); // doesn't work, cant find |
 	dup2(end[1], 1);
 	close(end[0]);
 	pipe_execute(array_left, env);
