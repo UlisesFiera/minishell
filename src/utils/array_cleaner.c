@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free_arrays(char **right_commands, char **left_commands)
 {
@@ -18,19 +18,70 @@ void	free_arrays(char **right_commands, char **left_commands)
 	free(left_commands);
 }
 
-void	fill_arrays(char **clean_array, char **left_cmd, char **right_cmd)
+void	fill_array(t_gen_data *data, char **clean_array, int optcode)
 {
 	int	i;
-	int	size;
+	int	j;
+	
+	i = 0;
+	if (optcode == 0)
+	{
+		while (data->executables[i] && data->executables[i][0] != '|')
+		{
+			clean_array[i] = ft_strdup(data->executables[i]); // must free
+			i++;
+		}
+		clean_array[i] = NULL;
+	}
+	else
+	{
+		while (data->executables[i] && data->executables[i][0] != '|')
+			i++;
+		i++;
+		j = 0;
+		while (data->executables[i] && data->executables[i][0] != '|')
+		{
+			clean_array[j] = ft_strdup(data->executables[i]); // must free
+			i++;
+			j++;
+		}
+		clean_array[j] = NULL;
+	}
+}
+
+char	**pipe_divider(t_gen_data *data, int optcode) // 0 = until '|'; 1 = from '|'
+{
+	char	**clean_array;
+	int		count;
+	int		i;
 
 	i = 0;
-	size = 0;
-	while (left_cmd[i])
-		clean_array[size++] = left_cmd[i++];
-	i = 0;
-	while (right_cmd[i])
-		clean_array[size++] = right_cmd[i++];
-	free_arrays(right_cmd, left_cmd);
+	count = 0;
+	if (optcode == 0)
+	{
+		while (data->executables[i] && data->executables[i][0] != '|')
+		{
+			count++;
+			i++;
+		}
+		clean_array = malloc(sizeof(char *) * count + 1);
+		fill_array(data, clean_array, optcode);
+		return (clean_array);
+	}
+	else
+	{
+		while (data->executables[i] && data->executables[i][0] != '|')
+			i++;
+		i++;
+		while (data->executables[i] && data->executables[i][0] != '|')
+		{
+			count++;
+			i++;
+		}
+		clean_array = malloc(sizeof(char *) * (count + 1));
+		fill_array(data, clean_array, optcode);
+		return (clean_array);
+	}
 }
 
 char	**array_cleaner_left(t_gen_data *data) // we get an array with everything but redirectors, until pipe

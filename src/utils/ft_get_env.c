@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_finder.c                                      :+:      :+:    :+:   */
+/*   ft_get_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 17:05:04 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/16 17:05:04 by ulfernan         ###   ########.fr       */
+/*   Created: 2025/05/13 13:17:21 by ulfernan          #+#    #+#             */
+/*   Updated: 2025/05/13 13:17:21 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	file_finder(char **command_array)
+char	*ft_getenv(char *env_name, char **env)
 {
-	int	index;
+	int		i;
+	int		j;
+	char	*env_sub;
 
-	index = 0;
-	while (command_array[index])
+	i = 0;
+	while (env[i])
 	{
-		if (access(command_array[index], F_OK) == 0)
-			return (index);
-		index++;
+		j = 0;
+		while (env[i][j] && env[i][j] != '=')
+			j++;
+		env_sub = ft_substr(env[i], 0, j);
+		if (ft_strcmp(env_sub, env_name) == 0)
+		{
+			free(env_sub);
+			return (env[i] + j + 1);
+		}
+		free(env_sub);
+		i++;
 	}
-	return (-1);
+	return (NULL);
 }

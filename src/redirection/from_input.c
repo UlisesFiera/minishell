@@ -14,7 +14,6 @@
 
 void	input_child(char *file, char *cmd_path, t_gen_data *data)
 {
-	int	stdin;
 	int	fd;
 
 	if (!cmd_path)
@@ -24,7 +23,12 @@ void	input_child(char *file, char *cmd_path, t_gen_data *data)
 		exit(1);
 	}
 	fd = open(file, O_RDONLY, 0777);
-	stdin = dup(0);
+	if (fd == -1)
+	{
+		printf("couldn't open file: %s\n", file);
+		free(cmd_path);
+		exit(1);
+	}
 	dup2(fd, 0);
 	close(fd);
 }

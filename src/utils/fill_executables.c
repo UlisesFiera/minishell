@@ -6,11 +6,11 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:39:09 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/16 15:31:01 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/20 08:47:16 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	find_quote(char *input, int index) // we check if the quote is grouping a command or if it's single
 {

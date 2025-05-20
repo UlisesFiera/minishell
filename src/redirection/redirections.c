@@ -12,38 +12,43 @@
 
 #include "../minishell.h"
 
+void	child_redirect_handler(t_gen_data *data, char **clean_commands, 
+								char **env, char *cmd_path)
+{
+	int	i;
+
+	i = 0;
+	while (data->executables[i])
+	{
+		if (!ft_strcmp(data->executables[i], "<"))
+			exec_from_input(data, i, cmd_path);
+		else if (!ft_strcmp(data->executables[i], ">"))
+			exec_to_output(data, i, cmd_path);
+		else if (!ft_strcmp(data->executables[i], ">>"))
+			exec_append(data, i, cmd_path);
+		else if (!ft_strcmp(data->executables[i], "<<")) 
+			exec_heredoc(data, i, cmd_path);
+		i++;
+	}
+	if (data->input_fd != -1) // this will be modified when using heredoc
+		dup2(data->input_fd, 0);
+	if (execve(cmd_path, clean_commands, env) == -1)
+	{
+		printf("couldn't find command: %s\n", data->executables[0]);
+		free(cmd_path);
+		exit(1);
+	}
+}
+
 void	redirect_handler(t_gen_data *data, char **clean_commands, char **env)
 {
-	int		i;
 	char	*cmd_path;
 	pid_t	pid;
 
 	cmd_path = ft_get_path(data->executables[0], env);
 	pid = fork();
 	if (!pid)
-	{
-		i = 0;
-		while (data->executables[i])
-		{
-			if (!ft_strcmp(data->executables[i], "<"))
-				exec_from_input(data, i, cmd_path);
-			else if (!ft_strcmp(data->executables[i], ">"))
-				exec_to_output(data, i, cmd_path);
-			else if (!ft_strcmp(data->executables[i], ">>"))
-				exec_append(data, i, cmd_path);
-			else if (!ft_strcmp(data->executables[i], "<<")) 
-				exec_heredoc(data, i, cmd_path);
-			i++;
-		}
-		if (data->input_fd != -1)
-			dup2(data->input_fd, 0);
-		if (execve(cmd_path, clean_commands, env) == -1)
-		{
-			printf("couldn't find command: %s\n", data->executables[0]);
-			free(cmd_path);
-			exit(1);
-		}
-	}
+		child_redirect_handler(data, clean_commands, env, cmd_path);
 	else if (pid > 0)
 	{
 		wait(NULL);

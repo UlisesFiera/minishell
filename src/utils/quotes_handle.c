@@ -6,11 +6,11 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:56:42 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/15 14:18:01 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/20 08:47:34 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	skip_single_quote(char *input, int *i)
 {

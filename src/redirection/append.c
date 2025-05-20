@@ -23,6 +23,12 @@ void	append_child(char *file, char *cmd_path, t_gen_data *data)
 		exit(1);
 	}
 	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
+	if (fd == -1)
+	{
+		printf("couldn't open file: %s\n", file);
+		free(cmd_path);
+		exit(1);
+	}
 	dup2(fd, 1);
 	close(fd);
 }

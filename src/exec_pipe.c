@@ -12,52 +12,34 @@
 
 #include "minishell.h"
 
-void	pipe_execute(char **commands, char **env)
+void	pipe_child(int *end, t_gen_data *data, char **env, char **commands_left)
 {
-	char	*cmd_path;
-
-	cmd_path = ft_get_path(commands[0], env);
-	if (!cmd_path)
-	{
-		printf("couldn't find command: %s\n", commands[0]);
-		free(cmd_path);
-		exit(1);
-	}
-	if (execve(cmd_path, commands, env) == -1)
-	{
-		ft_printf("execve couldn't find command: %s\n", commands[0]);
-		free(cmd_path);
-		exit(0);
-	}
-}
-
-void	pipe_child(int *end, t_gen_data *data, char **env)
-{
-	char	**array_left;
-
-	array_left = array_cleaner_left(data); // doesn't work, cant find |
+	data->executables = commands_left;
 	dup2(end[1], 1);
-	close(end[0]);
-	pipe_execute(array_left, env);
+	close(end[0]); // Close unused read end in child
+	close(end[1]); // Close write end after dup2
+	exec_command(data, env);
+	exit(1);
 }
 
-void	pipe_parent(int *end, t_gen_data *data, char **env) // we need to fork again because otherwise we'd terminate the shell after using execve in the parent
+void	pipe_parent(int *end, t_gen_data *data, char **env, char **commands_right) // we need to fork again because otherwise we'd terminate the shell after using execve in the parent
 {
-	char	**array_right;
 	pid_t	pid2;
 
-	array_right = array_cleaner_right(data, 0, "|");
-	wait(NULL);
+	data->executables = commands_right;
+	wait(NULL); // Wait for first child
 	pid2 = fork();
 	if (pid2 == 0)
 	{
 		dup2(end[0], 0);
-		close(end[1]);
-		pipe_execute(array_right, env);
+		close(end[1]); // Close unused write end in right child
+		close(end[0]); // Close read end after dup2
+		exec_command(data, env);
+		exit(1);
 	}
 	else
 	{
-		close(end[0]);
+		close(end[0]); // Close both ends in parent
 		close(end[1]);
 		wait(NULL);
 	}
@@ -67,14 +49,19 @@ void	exec_pipe(t_gen_data *data, char **env)
 {
 	int		end[2];
 	pid_t	pid1;
+	char	**commands_left;
+	char	**commands_right;
 
+	commands_left = pipe_divider(data, 0);
+	commands_right = pipe_divider(data, 1);
+	ft_free_tab(data->executables);
 	if (pipe(end) == -1)
 		ft_printf("pipe failure\n");
 	pid1 = fork();
 	if (pid1 < 0)
 		ft_printf("fork failure\n");
 	if (!pid1)
-		pipe_child(end, data, env);
+		pipe_child(end, data, env, commands_left);
 	else
-		pipe_parent(end, data, env);
+		pipe_parent(end, data, env, commands_right);
 }
