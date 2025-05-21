@@ -20,7 +20,7 @@ void	set_pipe_flag(t_gen_data *data)
 	while (data->executables[i])
 	{
 		if (!strcmp(data->executables[i], "|"))
-			data->pipe_flag = 1;
+			data->pipe_flag++;
 		i++;
 	}
 }

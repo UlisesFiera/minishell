@@ -31,7 +31,11 @@ void	child_redirect_handler(t_gen_data *data, char **clean_commands,
 		i++;
 	}
 	if (data->input_fd != -1) // this will be modified when using heredoc
+	{
 		dup2(data->input_fd, 0);
+		close(data->input_fd);
+		data->input_fd = -1;
+	}
 	if (execve(cmd_path, clean_commands, env) == -1)
 	{
 		printf("couldn't find command: %s\n", data->executables[0]);
@@ -73,7 +77,6 @@ int	redirect(t_gen_data *data, char **env)
 	{
 		if (ft_strnstr(symbol, data->executables[i], ft_strlen(symbol)))
 		{
-			//if (data->pipe_flag) in case of pipe we split the commands <- | -> and pipe them
 			clean_commands = array_cleaner_left(data);
 			redirect_handler(data, clean_commands, env);
 			free(clean_commands);

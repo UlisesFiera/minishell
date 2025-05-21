@@ -12,56 +12,101 @@
 
 #include "minishell.h"
 
-void	pipe_child(int *end, t_gen_data *data, char **env, char **commands_left)
+int	pipe_index(t_gen_data *data, char **commands)
 {
-	data->executables = commands_left;
-	dup2(end[1], 1);
-	close(end[0]); // Close unused read end in child
-	close(end[1]); // Close write end after dup2
-	exec_command(data, env);
-	exit(1);
+	if (!commands[data->pipe_index])
+		return (data->pipe_index);
+	if (commands[data->pipe_index][0] == '|')
+		data->pipe_index++;
+	while (commands[data->pipe_index])
+	{
+		if (commands[data->pipe_index][0] == '|')
+			return (data->pipe_index);
+		data->pipe_index++;
+	}
+	return (data->pipe_index);
 }
 
-void	pipe_parent(int *end, t_gen_data *data, char **env, char **commands_right) // we need to fork again because otherwise we'd terminate the shell after using execve in the parent
+char	**executables_copy(t_gen_data *data)
 {
-	pid_t	pid2;
+	char	**copy;
+	int		size;
+	int		i;
 
-	data->executables = commands_right;
-	wait(NULL); // Wait for first child
-	pid2 = fork();
-	if (pid2 == 0)
+	size = 0;
+	i = 0;
+	while (data->executables[i])
 	{
-		dup2(end[0], 0);
-		close(end[1]); // Close unused write end in right child
-		close(end[0]); // Close read end after dup2
-		exec_command(data, env);
-		exit(1);
+		size++;
+		i++;
 	}
-	else
+	copy = malloc(sizeof(char *) * (size + 1));
+	i = 0;
+	while (data->executables[i])
 	{
-		close(end[0]); // Close both ends in parent
-		close(end[1]);
-		wait(NULL);
+		copy[i] = ft_strdup(data->executables[i]);
+		i++;
 	}
+	copy[i] = NULL;
+	return (copy);
 }
 
 void	exec_pipe(t_gen_data *data, char **env)
 {
-	int		end[2];
+	int		pipes[2][2];
 	pid_t	pid1;
-	char	**commands_left;
-	char	**commands_right;
+	char	**exec_copy;
+	char	**commands;
+	int		index;
+	int		i;
 
-	commands_left = pipe_divider(data, 0);
-	commands_right = pipe_divider(data, 1);
-	ft_free_tab(data->executables);
-	if (pipe(end) == -1)
-		ft_printf("pipe failure\n");
-	pid1 = fork();
-	if (pid1 < 0)
-		ft_printf("fork failure\n");
-	if (!pid1)
-		pipe_child(end, data, env, commands_left);
-	else
-		pipe_parent(end, data, env, commands_right);
+	exec_copy = executables_copy(data);
+	i = 0;
+	index = 0;
+	while (i <= data->pipe_flag)
+	{
+		if (pipe(pipes[i % 2]) == -1)
+			ft_printf("pipe failure\n");
+		index = pipe_index(data, exec_copy);
+		pid1 = fork();
+		if (pid1 < 0)
+			ft_printf("fork failure\n");
+		if (!pid1)
+		{
+			commands = pipe_divider(exec_copy, index);
+			if (i > 0)
+			{
+				dup2(pipes[(i + 1) % 2][0], 0);
+				close(pipes[(i + 1) % 2][0]);
+				close(pipes[(i + 1) % 2][1]);
+			}
+			if (i < data->pipe_flag)
+			{
+				dup2(pipes[i % 2][1], 1);
+			}
+			close(pipes[i % 2][0]);
+			close(pipes[i % 2][1]);
+			data->executables = commands;
+			exec_command(data, env);
+			exit(1);
+		}
+		else
+		{
+			if (i > 0)
+			{
+				close(pipes[(i + 1) % 2][0]);
+				close(pipes[(i + 1) % 2][1]);
+			}
+			index = pipe_index(data, exec_copy);
+			commands = pipe_divider(exec_copy, index);
+		}
+		i++;
+	}
+	if (data->pipe_flag >= 0)
+	{
+		close(pipes[(i + 1) % 2][0]);
+		close(pipes[(i + 1) % 2][1]);
+	}
+	while (wait(NULL) > 0)
+		;
 }

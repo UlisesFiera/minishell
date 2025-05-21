@@ -18,70 +18,33 @@ void	free_arrays(char **right_commands, char **left_commands)
 	free(left_commands);
 }
 
-void	fill_array(t_gen_data *data, char **clean_array, int optcode)
-{
-	int	i;
-	int	j;
-	
-	i = 0;
-	if (optcode == 0)
-	{
-		while (data->executables[i] && data->executables[i][0] != '|')
-		{
-			clean_array[i] = ft_strdup(data->executables[i]); // must free
-			i++;
-		}
-		clean_array[i] = NULL;
-	}
-	else
-	{
-		while (data->executables[i] && data->executables[i][0] != '|')
-			i++;
-		i++;
-		j = 0;
-		while (data->executables[i] && data->executables[i][0] != '|')
-		{
-			clean_array[j] = ft_strdup(data->executables[i]); // must free
-			i++;
-			j++;
-		}
-		clean_array[j] = NULL;
-	}
-}
-
-char	**pipe_divider(t_gen_data *data, int optcode) // 0 = until '|'; 1 = from '|'
+char	**pipe_divider(char **commands, int index)
 {
 	char	**clean_array;
-	int		count;
+	int		size;
 	int		i;
+	int		j;
 
-	i = 0;
-	count = 0;
-	if (optcode == 0)
+	i = index - 1; // we skip the | or \0 moving to the left as we will copy from there to the left
+	size = 0;
+	while (i >= 0 && commands[i][0] != '|' && commands[i])
 	{
-		while (data->executables[i] && data->executables[i][0] != '|')
-		{
-			count++;
-			i++;
-		}
-		clean_array = malloc(sizeof(char *) * count + 1);
-		fill_array(data, clean_array, optcode);
-		return (clean_array);
+		size++;
+		i--;
 	}
-	else
+	clean_array = malloc(sizeof(char *) * (size + 1));
+	if (!clean_array)
+		return (NULL);
+	i = index - size;
+	j = 0;
+	while (j < size)
 	{
-		while (data->executables[i] && data->executables[i][0] != '|')
-			i++;
+		clean_array[j] = ft_strdup(commands[i]);
 		i++;
-		while (data->executables[i] && data->executables[i][0] != '|')
-		{
-			count++;
-			i++;
-		}
-		clean_array = malloc(sizeof(char *) * (count + 1));
-		fill_array(data, clean_array, optcode);
-		return (clean_array);
+		j++;
 	}
+	clean_array[j] = NULL;
+	return (clean_array);
 }
 
 char	**array_cleaner_left(t_gen_data *data) // we get an array with everything but redirectors, until pipe
