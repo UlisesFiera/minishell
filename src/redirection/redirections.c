@@ -33,8 +33,11 @@ void	child_redirect_handler(t_gen_data *data, char **clean_commands,
 	if (data->input_fd != -1) // this will be modified when using heredoc
 	{
 		dup2(data->input_fd, 0);
+		dup2(data->output_fd, 1);
+		close(data->output_fd);
 		close(data->input_fd);
 		data->input_fd = -1;
+		data->output_fd = -1;
 	}
 	if (execve(cmd_path, clean_commands, env) == -1)
 	{

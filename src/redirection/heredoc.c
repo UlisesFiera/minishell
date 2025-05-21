@@ -12,10 +12,17 @@
 
 #include "../minishell.h"
 
-void	collect_input(int *end, char *delimiter)
+void	collect_input(int *end, char *delimiter, t_gen_data *data)
 {
 	char	*line;
+	int		tty;
 
+	tty = open("/dev/tty", O_RDWR);
+	data->input_fd = dup(0);
+	data->output_fd = dup(1);
+	dup2(tty, 0);
+	dup2(tty, 1);
+	close(tty);
 	line = readline("> ");
 	while (line && ft_strcmp(line, delimiter))
 	{
@@ -40,7 +47,7 @@ void	exec_heredoc(t_gen_data *data, int index, char *cmd_path)
 	}
 	delimiter = data->executables[index + 1];
 	pipe(end);
-	collect_input(end, delimiter);
-	data->input_fd = end[0];
+	collect_input(end, delimiter, data);
 	close(end[1]);
+	data->input_fd = end[0]; 
 }

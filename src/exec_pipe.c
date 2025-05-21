@@ -97,15 +97,8 @@ void	exec_pipe(t_gen_data *data, char **env)
 				close(pipes[(i + 1) % 2][0]);
 				close(pipes[(i + 1) % 2][1]);
 			}
-			index = pipe_index(data, exec_copy);
-			commands = pipe_divider(exec_copy, index);
 		}
 		i++;
-	}
-	if (data->pipe_flag >= 0)
-	{
-		close(pipes[(i + 1) % 2][0]);
-		close(pipes[(i + 1) % 2][1]);
 	}
 	while (wait(NULL) > 0)
 		;
