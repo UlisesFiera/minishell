@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 09:24:20 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/21 19:25:09 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/22 08:27:41 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,18 @@ void	remove_temps(t_gen_data *data)
 	int	i;
 
 	i = 0;
-	while (data->tmp_filenames[i])
+	if (data->tmp_filenames)
 	{
-		unlink(data->tmp_filenames[i]);
-		i++;
+		while (data->tmp_filenames[i])
+		{
+			unlink(data->tmp_filenames[i]);
+			free(data->tmp_filenames[i]);
+			data->tmp_filenames[i] = NULL;
+			i++;
+		}
+		free(data->tmp_filenames);
+		data->tmp_filenames = NULL;
 	}
-	free(data->tmp_filenames);
 }
 
 void	free_data(t_gen_data *data)
@@ -54,5 +60,10 @@ void	free_data(t_gen_data *data)
 	{
 		free(data->input);
 		data->input = NULL;
+	}
+	if (data->tmp_fds)
+	{
+		free(data->tmp_fds);
+		data->tmp_fds = NULL;
 	}
 }

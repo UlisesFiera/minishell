@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:08:06 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/21 19:25:18 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:12:50 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int argc, char **argv, char **env)
 		read_input(data); // get the user input and add it to history
 		if (data->input && *data->input != '\0')
 		{
-			parse_input(data);
+			parse_input(data, env);
 			generate_heredocs(data);
 			if (data->pipe_flag > 0)
 				exec_pipe(data, env);

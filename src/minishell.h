@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/21 19:25:39 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:07:23 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_gen_data
 /* Shell functionalities */
 
 char	*read_input(t_gen_data *data);
-void	parse_input(t_gen_data *data);
+void	parse_input(t_gen_data *data, char **env);
 void	init_data(t_gen_data *data);
 void	free_data(t_gen_data *data);
 void	free_exec(t_gen_data *data);
