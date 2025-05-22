@@ -81,9 +81,7 @@ void	exec_pipe(t_gen_data *data, char **env)
 				close(pipes[(i + 1) % 2][1]);
 			}
 			if (i < data->pipe_flag)
-			{
 				dup2(pipes[i % 2][1], 1);
-			}
 			close(pipes[i % 2][0]);
 			close(pipes[i % 2][1]);
 			data->executables = commands;

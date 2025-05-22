@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:08:06 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/20 17:18:30 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/21 19:25:18 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,14 @@ int	main(int argc, char **argv, char **env)
 		if (data->input && *data->input != '\0')
 		{
 			parse_input(data);
+			generate_heredocs(data);
 			if (data->pipe_flag > 0)
 				exec_pipe(data, env);
 			else
 				exec_command(data, env);
 		}
 		free_exec(data);
+		remove_temps(data);
 		data->pipe_flag = 0;
 		data->pipe_index = 0;
 	}

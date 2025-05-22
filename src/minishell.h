@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/20 17:17:09 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/21 19:25:39 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_gen_data
 	int		input_fd;
 	int		output_fd;
 	int		pipe_index;
+	int		*tmp_fds;
+	char	**tmp_filenames;
 } 	t_gen_data;
 
 /* Shell functionalities */
@@ -73,6 +75,9 @@ int		redirect(t_gen_data *data, char **env);
 void	exec_from_input(t_gen_data *data, int index, char *cmd_path);
 void	exec_to_output(t_gen_data *data, int index, char *cmd_path);
 void	exec_append(t_gen_data *data, int index, char *cmd_path);
-void	exec_heredoc(t_gen_data *data, int index, char *cmd_path);
+void	exec_heredoc(t_gen_data *data, int index, int count);
+void	generate_heredocs(t_gen_data *data);
+void	collect_input(t_gen_data *data, int index, int count);
+void	remove_temps(t_gen_data *data);
 
 #endif

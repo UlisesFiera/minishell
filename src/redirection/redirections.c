@@ -16,8 +16,10 @@ void	child_redirect_handler(t_gen_data *data, char **clean_commands,
 								char **env, char *cmd_path)
 {
 	int	i;
+	int	count;
 
 	i = 0;
+	count = 0;
 	while (data->executables[i])
 	{
 		if (!ft_strcmp(data->executables[i], "<"))
@@ -26,18 +28,12 @@ void	child_redirect_handler(t_gen_data *data, char **clean_commands,
 			exec_to_output(data, i, cmd_path);
 		else if (!ft_strcmp(data->executables[i], ">>"))
 			exec_append(data, i, cmd_path);
-		else if (!ft_strcmp(data->executables[i], "<<")) 
-			exec_heredoc(data, i, cmd_path);
+		else if (!ft_strcmp(data->executables[i], "<<"))
+		{
+			exec_heredoc(data, i, count);
+			count++;
+		}
 		i++;
-	}
-	if (data->input_fd != -1) // this will be modified when using heredoc
-	{
-		dup2(data->input_fd, 0);
-		dup2(data->output_fd, 1);
-		close(data->output_fd);
-		close(data->input_fd);
-		data->input_fd = -1;
-		data->output_fd = -1;
 	}
 	if (execve(cmd_path, clean_commands, env) == -1)
 	{
