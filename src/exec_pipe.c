@@ -68,11 +68,13 @@ void	exec_pipe(t_gen_data *data, char **env)
 		if (pipe(pipes[i % 2]) == -1)
 			ft_printf("pipe failure\n");
 		index = pipe_index(data, exec_copy);
+		signal(SIGINT, SIG_IGN);
 		pid1 = fork();
 		if (pid1 < 0)
 			ft_printf("fork failure\n");
 		if (!pid1)
 		{
+			signal(SIGINT, SIG_DFL);
 			commands = pipe_divider(exec_copy, index);
 			if (i > 0)
 			{
@@ -100,4 +102,5 @@ void	exec_pipe(t_gen_data *data, char **env)
 	}
 	while (wait(NULL) > 0)
 		;
+	signal(SIGINT, signal_handler);
 }

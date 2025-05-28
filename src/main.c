@@ -6,17 +6,16 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:08:06 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/22 10:12:50 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/28 19:00:50 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_signal = 0;
 
 void	reset_prompt(void)
 {
-	printf("\n");
+	write(1, "\n", 1);
 	rl_on_new_line(); // this tells the readline lib that the cursor where it will start reading from is on a new line
 	rl_replace_line("", 0); // clears the readline buffer that stores the input
 	rl_redisplay();  // redraws the prompt
@@ -24,10 +23,8 @@ void	reset_prompt(void)
 
 void	signal_handler(int signal)
 {
-	g_signal = signal;
-	if (g_signal == SIGINT)
+	if (signal == SIGINT && isatty(0))
 		reset_prompt();
-	g_signal = 0;
 }
 
 int	main(int argc, char **argv, char **env)
@@ -43,7 +40,7 @@ int	main(int argc, char **argv, char **env)
 	while (data->input) // we loop until the input it's NULL on error or by pressing ctrl-d
 	{
 		read_input(data); // get the user input and add it to history
-		if (data->input && *data->input != '\0')
+		if (data->input && *data->input != '\0' && !is_only_spaces(data->input))
 		{
 			parse_input(data, env);
 			generate_heredocs(data);

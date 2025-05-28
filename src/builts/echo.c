@@ -1,40 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strinsert.c                                     :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/23 18:17:22 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/23 18:17:22 by ulfernan         ###   ########.fr       */
+/*   Created: 2025/05/28 12:49:24 by ulfernan          #+#    #+#             */
+/*   Updated: 2025/05/28 12:49:24 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_strinsert(char *string, char *insert, int index, int skip)
+void	echo(t_gen_data *data, char **commands)
 {
-	char	*new_string;
 	int		i;
-	int		j;
-	int		n;
 
-	new_string = malloc(sizeof(char) * (ft_strlen(string) + ft_strlen(insert)));
-	if (!new_string)
-		return (NULL);
-	i = 0;
-	j = 0;
-	n = 0;
-	while (i < index)
-		new_string[n++] = string[i++];
-	while (insert[j])
+	(void)data;
+	i = 1;
+	while (commands[i])
 	{
-		new_string[n++] = insert[j++];
+		write(1, commands[i], ft_strlen(commands[i]));
+		if (commands[i + 1])
+			write(1, " ", 1);
+		else
+			write(1, "\n", 1);
 		i++;
 	}
-	i += skip;
-	while (string[i])
-		new_string[n++] = string[i++];
-	new_string[n] = '\0';
-	return (new_string);
+	exit(0);
 }

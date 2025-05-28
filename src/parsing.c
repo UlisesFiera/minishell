@@ -122,7 +122,7 @@ void	parse_env_vars_quotes(t_gen_data *data, char **env, char *command, int inde
 				free(env_paths);
 				return ;
 			}
-			new_string = ft_strinsert(command, env_paths[j], i);
+			new_string = ft_strinsert(command, env_paths[j], i, 1);
 			command = new_string;
 			j++;
 		}

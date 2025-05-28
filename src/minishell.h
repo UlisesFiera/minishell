@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/23 18:42:57 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/28 19:38:54 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ void	exec_pipe(t_gen_data *data, char **env);
 int		file_finder(char **command_array);
 void	init_quotes(t_gen_data *data, int exec_count);
 char	**pipe_divider(char **commands, int index);
-char	*ft_strinsert(char *string, char *insert, int index);
+char	*ft_strinsert(char *string, char *insert, int index, int skip);
+void	signal_handler(int signal);
+int		is_only_spaces(char *str);
 
 /* Redirections */
 
@@ -83,5 +85,9 @@ void	exec_heredoc(t_gen_data *data, int index, int count);
 void	generate_heredocs(t_gen_data *data);
 void	collect_input(t_gen_data *data, int index, int count);
 void	remove_temps(t_gen_data *data);
+
+/* Built-ins */
+
+void	echo(t_gen_data *data, char **commands);
 
 #endif
