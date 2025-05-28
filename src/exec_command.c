@@ -42,7 +42,7 @@ void	exec_env(t_gen_data *data, char **env)
 		if (!pid)
 			execve_handler(cmd_path, data, env);
 		else if (pid > 0)
-			wait(NULL);
+			wait(&data->exit_status);
 		else
 		{
 			printf("Fork failed\n");

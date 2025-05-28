@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/22 10:07:23 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:42:57 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ typedef struct s_gen_data
 	char	*final_prompt;
 	char	*input;
 	char	**executables;
+	int		*quotes;
 	int		pipe_flag;
 	int		input_fd;
 	int		output_fd;
 	int		pipe_index;
 	int		*tmp_fds;
 	char	**tmp_filenames;
+	int		exit_status;
 } 	t_gen_data;
 
 /* Shell functionalities */
@@ -54,7 +56,7 @@ void	free_data(t_gen_data *data);
 void	free_exec(t_gen_data *data);
 void	exec_command(t_gen_data *data, char **env);
 int		exec_counter(char *input);
-char	*exec_split(char *input, int *index);
+char	*exec_split(char *input, int *index, int command_index, t_gen_data *data);
 int		exec_counter(char *input);
 int		find_quote(char *input, int index);
 char	*ft_get_path(char *cmd, char **env);
@@ -67,7 +69,9 @@ char	**array_cleaner(t_gen_data *data, char *symbol);
 void	reset_prompt(void);
 void	exec_pipe(t_gen_data *data, char **env);
 int		file_finder(char **command_array);
+void	init_quotes(t_gen_data *data, int exec_count);
 char	**pipe_divider(char **commands, int index);
+char	*ft_strinsert(char *string, char *insert, int index);
 
 /* Redirections */
 

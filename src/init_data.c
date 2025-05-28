@@ -6,11 +6,24 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 08:47:54 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/21 19:21:35 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/23 17:21:53 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	init_quotes(t_gen_data *data, int exec_count)
+{
+	int	i;
+
+	data->quotes = malloc(sizeof(int) * (exec_count));
+	i = 0;
+	while (i < exec_count)
+	{
+		data->quotes[i] = 0;
+		i++;
+	}
+}
 
 void	generate_heredocs(t_gen_data *data)
 {
@@ -66,6 +79,7 @@ void	*init_data_handler(t_gen_data *data)
 	data->input_fd = -1;
 	data->output_fd = -1;
 	data->pipe_index = 0;
+	data->exit_status = 0;
 	return (data);
 }
 

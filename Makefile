@@ -26,6 +26,7 @@ SRCS					= src/main.c \
 						  src/utils/array_cleaner.c \
 						  src/exec_pipe.c \
 						  src/utils/file_finder.c \
+						  src/utils/ft_strinsert.c \
 
 
 OBJS					= ${SRCS:.c=.o}

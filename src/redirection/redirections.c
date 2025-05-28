@@ -54,7 +54,7 @@ void	redirect_handler(t_gen_data *data, char **clean_commands, char **env)
 		child_redirect_handler(data, clean_commands, env, cmd_path);
 	else if (pid > 0)
 	{
-		wait(NULL);
+		wait(&data->exit_status);
 		free(cmd_path);
 	}
     else
@@ -67,14 +67,15 @@ void	redirect_handler(t_gen_data *data, char **clean_commands, char **env)
 int	redirect(t_gen_data *data, char **env)
 {
 	char	**clean_commands;
-	char	*symbol;
 	int		i;
 
-	symbol = "<;<<;>;>>";
 	i = 0;
 	while (data->executables[i])
 	{
-		if (ft_strnstr(symbol, data->executables[i], ft_strlen(symbol)))
+		if (!ft_strcmp(data->executables[i], "<") ||
+				!ft_strcmp(data->executables[i], "<<") ||
+				!ft_strcmp(data->executables[i], ">") ||
+				!ft_strcmp(data->executables[i], ">>"))
 		{
 			clean_commands = array_cleaner_left(data);
 			redirect_handler(data, clean_commands, env);

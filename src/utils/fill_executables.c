@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:39:09 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/20 08:47:16 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:42:26 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,34 @@
 
 int	find_quote(char *input, int index) // we check if the quote is grouping a command or if it's single
 {
+	char	quote;
+
+	quote = input[index];
+	index++;
 	while (input[index])
 	{
-		if (input[index] == '"' || input[index] == '\'')
+		if (input[index] == quote)
 			return (0);
 		index++;
 	}
 	return (1);
 }
 
-int	exec_size(char *input, int i, int *quotes)
+int	exec_size(char *input, int i, char *quotes)
 {
 	int	size;
 
 	size = 0;
 	while (input[i] == ' ')
 		i++;
-	while (input[i] != '\0' && input[i] != ' ' && !*quotes)
+	while (input[i] != '\0' && (*quotes != '\0' || input[i] != ' '))
 	{
-		if ((input[i] == '"' || input[i] == '\'') && !find_quote(input, i + 1))
+		if ((input[i] == '"' || input[i] == '\'') && !find_quote(input, i))
 		{
-			*quotes = 1;
-			while (input[++i] != '\0' && input[i] != '"' && input[i] != '\'')
+			*quotes = input[i];
+			while (input[++i] != '\0' && input[i] != *quotes)
 				size++;
-			if (input[i] == '"' || input[i] == '\'')
+			if (input[i] == *quotes)
 				i++;
 		}
 		else
@@ -49,19 +53,19 @@ int	exec_size(char *input, int i, int *quotes)
 	return (size);
 }
 
-static void	fill_exec(char *executable, char *input, int *index, int quotes)
+static void	fill_exec(char *executable, char *input, int *index, char quotes)
 {
 	int	i;
 	
 	i = 0;
 	while (input[*index] == ' ')
 		(*index)++;
-	if (quotes)
+	if (quotes != '\0')
 	{
 		(*index)++;
-		while (input[*index] && input[*index] != '"' && input[*index] != '\'')
+		while (input[*index] && input[*index] != quotes)
 			executable[i++] = input[(*index)++];
-		if (input[*index] == '"' || input[*index] == '\'')
+		if (input[*index] == quotes)
 			(*index)++;
 	}
 	else
@@ -72,19 +76,23 @@ static void	fill_exec(char *executable, char *input, int *index, int quotes)
 	executable[i] = '\0';
 }
 
-char	*exec_split(char *input, int *index)
+char	*exec_split(char *input, int *index, int command_index, t_gen_data *data)
 {
 	char	*executable;
-	int		quotes;
+	char	quotes;
 	int		i;
 	int		size;
 
 	i = *index;
-	quotes = 0;
+	quotes = '\0';
 	size = exec_size(input, i, &quotes);
 	executable = malloc(sizeof(char) * size + 1);
 	if (!executable)
 		return (NULL);
 	fill_exec(executable, input, index, quotes);
+	if (quotes == '"')
+		data->quotes[command_index] = 1;
+	else if (quotes == '\'')
+		data->quotes[command_index] = 2;
 	return (executable);
 }
