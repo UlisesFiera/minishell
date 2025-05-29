@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:08:06 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/28 19:00:50 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/29 11:58:12 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **env)
 		if (data->input && *data->input != '\0' && !is_only_spaces(data->input))
 		{
 			parse_input(data, env);
-			generate_heredocs(data);
+			generate_heredocs(data, env);
 			if (data->pipe_flag > 0)
 				exec_pipe(data, env);
 			else

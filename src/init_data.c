@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 08:47:54 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/23 17:21:53 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/05/29 11:49:44 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_quotes(t_gen_data *data, int exec_count)
 	}
 }
 
-void	generate_heredocs(t_gen_data *data)
+void	generate_heredocs(t_gen_data *data, char **env)
 {
 	int	i;
 	int	count;
@@ -47,7 +47,7 @@ void	generate_heredocs(t_gen_data *data)
 	{
 		if (!ft_strcmp(data->executables[i], "<<"))
 		{
-			collect_input(data, i, count);
+			collect_input(data, i, count, env);
 			count++;
 		}
 		i++;

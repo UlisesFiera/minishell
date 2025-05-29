@@ -21,7 +21,7 @@ char	*get_env_var(char *command, int index)
 
 	size = 0;
 	i = index + 1;
-	while (command[i] && command[i] >= 'A' && command[i] <= 'Z')
+	while (command[i] && ((command[i] >= 'A' && command[i] <= 'Z') || (command[i] >= 'a' && command[i] <= 'z') || (command[i] >= '0' && command[i] <= '9') || command[i] == '_'))
 	{
 		size++;
 		i++;
@@ -30,7 +30,7 @@ char	*get_env_var(char *command, int index)
 	env_var[size] = '\0';
 	i = index + 1;
 	j = 0;
-	while (command[i] && command[i] >= 'A' && command[i] <= 'Z')
+	while (command[i] && ((command[i] >= 'A' && command[i] <= 'Z') || (command[i] >= 'a' && command[i] <= 'z') || (command[i] >= '0' && command[i] <= '9') || command[i] == '_'))
 	{
 		env_var[j] = command[i];
 		i++;
@@ -39,12 +39,14 @@ char	*get_env_var(char *command, int index)
 	return (env_var);
 }
 
-char	*env_cleaner(char *executable, char **env, t_gen_data *data) // must free
+char	*env_cleaner(char *executable, char **env, t_gen_data *data, char *full_exec) // must free
 {
 	char	*name;
 	char	*path;
 	char	*sufix;
+	char	*prefix;
 	char	*final_env;
+	char	*prev_final;
 	int		i;
 	int		j;
 	int		index;
@@ -57,11 +59,34 @@ char	*env_cleaner(char *executable, char **env, t_gen_data *data) // must free
 		return (final_env);
 	}
 	i = 0;
-	while (executable[i] && executable[i] >= 'A' && executable[i] <= 'Z')
+	if (executable[i] >= '0' && executable[i] <= '9')
+	{
+		i++;
+		j = i;
+		while (executable[i] && ((executable[i] >= 'A' && executable[i] <= 'Z') || (executable[i] >= 'a' && executable[i] <= 'z') || (executable[i] >= '0' && executable[i] <= '9') || executable[i] == '_'))
+			i++;
+		sufix = malloc(sizeof(char) * (i + 1));
+		sufix[i] = '\0';
+		i = 0;
+		while (sufix[i])
+		{
+			sufix[i] = executable[j];
+			i++;
+			j++;
+		}
+		i = 0;
+		while (full_exec[i] != '$')
+			i++;
+		prefix = malloc(sizeof(char) * (i + 1));
+		prefix[i] = '\0';
+		final_env = ft_strjoin(prefix, sufix);
+		return (final_env);
+	}
+	while (executable[i] && ((executable[i] >= 'A' && executable[i] <= 'Z') || (executable[i] >= 'a' && executable[i] <= 'z') || (executable[i] >= '0' && executable[i] <= '9') || executable[i] == '_'))
 		i++;
 	name = malloc(sizeof(char) * (i + 1));
 	i = 0;
-	while (executable[i] && executable[i] >= 'A' && executable[i] <= 'Z')
+	while (executable[i] && ((executable[i] >= 'A' && executable[i] <= 'Z') || (executable[i] >= 'a' && executable[i] <= 'z') || (executable[i] >= '0' && executable[i] <= '9') || executable[i] == '_'))
 	{
 		name[i] = executable[i];
 		i++;
@@ -69,7 +94,17 @@ char	*env_cleaner(char *executable, char **env, t_gen_data *data) // must free
 	name[i] = '\0';
 	path = ft_getenv(name, env);
 	if (!path)
-		return (NULL);
+	{
+		sufix = malloc(1);
+		sufix[0] = '\0';
+		i = 0;
+		while (full_exec[i] != '$')
+			i++;
+		prefix = malloc(sizeof(char) * (i + 1));
+		prefix[i] = '\0';
+		final_env = ft_strjoin(prefix, sufix);
+		return (final_env);
+	}
 	j = 0;
 	index = i;
 	while (executable[i])
@@ -86,7 +121,13 @@ char	*env_cleaner(char *executable, char **env, t_gen_data *data) // must free
 		i++;
 	}
 	sufix[i] = '\0';
-	final_env = ft_strjoin(path, sufix);
+	prev_final = ft_strjoin(path, sufix);
+	i = 0;
+	while (full_exec[i] != '$')
+		i++;
+	prefix = malloc(sizeof(char) * (i + 1));
+	prefix[i] = '\0';
+	final_env = ft_strjoin(prefix, prev_final);
 	return (final_env);
 }
 
@@ -116,12 +157,7 @@ void	parse_env_vars_quotes(t_gen_data *data, char **env, char *command, int inde
 	{
 		if (command[i] == '$')
 		{
-			env_paths[j] = env_cleaner(command + i + 1, env, data);
-			if (!env_paths[j])
-			{
-				free(env_paths);
-				return ;
-			}
+			env_paths[j] = env_cleaner(command + i + 1, env, data, command);
 			new_string = ft_strinsert(command, env_paths[j], i, 1);
 			command = new_string;
 			j++;
@@ -137,6 +173,7 @@ void	parse_env_vars(t_gen_data *data, char **env) // must free env paths
 	int		count;
 	int		i;
 	int		j;
+	int		n;
 	char	**env_paths;
 
 	count = 0;
@@ -145,8 +182,16 @@ void	parse_env_vars(t_gen_data *data, char **env) // must free env paths
 	{
 		if (data->quotes[i] == 1)
 			parse_env_vars_quotes(data, env, data->executables[i], i);
-		else if (data->executables[i][0] == '$' && data->quotes[i] != 2)
-			count++;
+		else if (data->quotes[i] != 2)
+		{
+			j = 0;
+			while(data->executables[i][j])
+			{
+				if (data->executables[i][j] == '$')
+					count++;
+				j++;
+			}
+		}
 		i++;
 	}
 	if (count == 0)
@@ -157,17 +202,17 @@ void	parse_env_vars(t_gen_data *data, char **env) // must free env paths
 	j = 0;
 	while (data->executables[i])
 	{
-		if (data->executables[i][0] == '$')
+		n = 0;
+		while (data->executables[i][n])
 		{
-			env_paths[j] = env_cleaner(data->executables[i] + 1, env, data);
-			if (!env_paths[j])
+			if (data->executables[i][n] == '$')
 			{
-				free(env_paths);
-				return ;
+				env_paths[j] = env_cleaner(data->executables[i] + n + 1, env, data, data->executables[i]);
+				free(data->executables[i]);
+				data->executables[i] = env_paths[j];
+				j++;
 			}
-			free(data->executables[i]);
-			data->executables[i] = env_paths[j];
-			j++;
+			n++;
 		}
 		i++;
 	}

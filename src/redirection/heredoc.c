@@ -12,6 +12,47 @@
 
 #include "../minishell.h"
 
+char	*parse_env_vars_heredoc(char *line, char **env, t_gen_data *data)
+{
+	int		count;
+	int		i;
+	int		j;
+	char	**env_paths;
+	char	*new_string;
+
+	count = 0;
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '$')
+			count++;
+		i++;
+	}
+	if (count == 0)
+		return (line);
+	env_paths = malloc(sizeof(char *) * (count + 1));
+	env_paths[count] = NULL;
+	i = 0;
+	j = 0;
+	while (line[i])
+	{
+		if (line[i] == '$')
+		{
+			env_paths[j] = env_cleaner(line + i + 1, env, data, line);
+			if (!env_paths[j])
+			{
+				free(env_paths);
+				return (line);
+			}
+			new_string = ft_strinsert(line, env_paths[j], i, 2);
+			line = new_string;
+			j++;
+		}
+		i++;
+	}
+	return (line);
+}
+
 char	*file_name_generator(int count)
 {
 	char	*file_prefix;
@@ -25,7 +66,7 @@ char	*file_name_generator(int count)
 	return (final);
 }
 
-void	collect_input(t_gen_data *data, int index, int count)
+void	collect_input(t_gen_data *data, int index, int count, char **env)
 {
 	char	*delimiter;
 	char	*line;
@@ -34,6 +75,8 @@ void	collect_input(t_gen_data *data, int index, int count)
 	data->tmp_filenames[count] = file_name_generator(count);
 	data->tmp_fds[count] = open(data->tmp_filenames[count], O_CREAT | O_RDWR, 0644);
 	line = readline("> ");
+	if (data->quotes[index + 1] != 2)
+		line = parse_env_vars_heredoc(line, env, data);
 	while (line && ft_strcmp(line, delimiter))
 	{
 		write(data->tmp_fds[count], line, ft_strlen(line));
