@@ -12,8 +12,7 @@
 
 #include "../minishell.h"
 
-void	child_redirect_handler(t_gen_data *data, char **clean_commands, 
-								char **env, char *cmd_path)
+void	redirect_setter(t_gen_data *data, char *cmd_path)
 {
 	int	i;
 	int	count;
@@ -36,6 +35,12 @@ void	child_redirect_handler(t_gen_data *data, char **clean_commands,
 		}
 		i++;
 	}
+}
+
+void	child_redirect_handler(t_gen_data *data, char **clean_commands, 
+								char **env, char *cmd_path)
+{
+	redirect_setter(data, cmd_path);
 	if (!env)
 	{
 		if (!ft_strcmp(clean_commands[0], "echo"))

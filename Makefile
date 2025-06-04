@@ -10,6 +10,8 @@ SRCS					= src/main.c \
 						  src/read_input.c \
 						  src/parsing/parsing.c \
 						  src/parsing/parse_env_vars.c \
+						  src/parsing/expand_env_utils.c \
+						  src/parsing/expand_env.c \
 						  src/init_data.c \
 						  src/free_data.c \
 						  src/exec_command.c \

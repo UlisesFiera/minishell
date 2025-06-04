@@ -47,17 +47,13 @@ char	**pipe_divider(char **commands, int index)
 	return (clean_array);
 }
 
-char	**array_cleaner_left(t_gen_data *data) // we get an array with everything but redirectors, until pipe
+int	command_count_without_symbols(t_gen_data *data, char *symbol)
 {
-	char	**clean_array;
-	char	*symbol;
-	int		count;
-	int		i;
-	int		j;
+	int	count;
+	int	i;
 
-	symbol = "<;<<;>;>>";
-	count = 0;
 	i = 0;
+	count = 0;
 	while (data->executables[i] && data->executables[i][0] != '|')
 	{
 		while (ft_strnstr(symbol, data->executables[i], ft_strlen(symbol))) // we skip 2 because whats right after a symbol is always a file, hence not a valid arg for the command
@@ -68,6 +64,19 @@ char	**array_cleaner_left(t_gen_data *data) // we get an array with everything b
 			i++;
 		}
 	}
+	return (count);
+}
+
+char	**array_cleaner_left(t_gen_data *data) // we get an array with everything but redirectors, until pipe
+{
+	char	**clean_array;
+	char	*symbol;
+	int		count;
+	int		i;
+	int		j;
+
+	symbol = "<;<<;>;>>";
+	count = command_count_without_symbols(data, symbol);
 	clean_array = malloc(sizeof(char *) * (count + 1));
 	clean_array[count] = NULL;
 	i = 0;
@@ -109,28 +118,3 @@ char	**array_cleaner_right(t_gen_data *data, int optcode, char *symbol) // this 
 		clean_array[i++] = data->executables[n++];
 	return (clean_array);
 }
-
-/*
-char	**array_cleaner(t_gen_data *data, char *symbol)
-{
-	char	**clean_array;
-	char	**left_commands;
-	char	**right_commands;
-	int		size;
-	int		i;
-
-	left_commands = array_cleaner_left(data, symbol);
-	right_commands = array_cleaner_right(data, 1, symbol);
-	size = 0;
-	i = 0;
-	while (left_commands[i++])
-		size++;
-	i = 0;
-	while (right_commands[i++])
-		size++;
-	clean_array = malloc(sizeof(char *) * (size + 1));
-	clean_array[size] = NULL;
-	fill_arrays(clean_array, left_commands, right_commands);
-	return (clean_array);
-}
-*/

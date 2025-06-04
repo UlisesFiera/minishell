@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/04 13:05:31 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:08:43 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,11 @@ char	**pipe_divider(char **commands, int index);
 char	*ft_strinsert(char *string, char *insert, int index, int skip);
 void	signal_handler(int signal);
 int		is_only_spaces(char *str);
-char	*env_cleaner(char *executable, char **env, t_gen_data *data, char *full_command);
+char	*expand_env(char *executable, char **env, t_gen_data *data);
 void	set_pipe_flag(t_gen_data *data);
+char	*get_env_var(char *executable, char **env, t_gen_data *data);
+void	parse_env_vars_quotes(t_gen_data *data, char **env, char *command, int index);
+void	replace_env(t_gen_data *data, char **env_paths, char **env);
 
 /* Parsing */
 

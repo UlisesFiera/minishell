@@ -12,6 +12,46 @@
 
 #include "../minishell.h"
 
+int	env_var_count(t_gen_data *data, char **env)
+{
+	int	count;
+	int	i;
+	int	j;
+
+	count = 0;
+	i = 0;
+	while (data->executables[i])
+	{
+		if (data->quotes[i] == 1)
+			parse_env_vars_quotes(data, env, data->executables[i], i);
+		if (data->quotes[i] != 2)
+		{
+			j = 0;
+			while(data->executables[i][j])
+			{
+				if (data->executables[i][j] == '$')
+					count++;
+				j++;
+			}
+		}
+		i++;
+	}
+	return (count);
+}
+
+void	env_var_check(t_gen_data *data, char **env)
+{
+	int		count;
+	char	**env_paths;
+
+	count = env_var_count(data, env);
+	if (count == 0)
+		return ;
+	env_paths = malloc(sizeof(char *) * (count + 1));
+	env_paths[count] = NULL;
+	replace_env(data, env_paths, env);
+}
+
 void	parse_input(t_gen_data *data, char **env)
 {
 	int		exec_count;
