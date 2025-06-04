@@ -8,7 +8,8 @@ STD_FLAGS 				= -Wall -Wextra -Werror -L/usr/local/opt/readline/lib -I/usr/local
 
 SRCS					= src/main.c \
 						  src/read_input.c \
-						  src/parsing.c \
+						  src/parsing/parsing.c \
+						  src/parsing/env_vars.c \
 						  src/init_data.c \
 						  src/free_data.c \
 						  src/exec_command.c \

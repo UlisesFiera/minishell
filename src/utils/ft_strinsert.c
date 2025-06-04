@@ -19,22 +19,31 @@ char	*ft_strinsert(char *string, char *insert, int index, int skip)
 	int		j;
 	int		n;
 
-	new_string = malloc(sizeof(char) * (ft_strlen(string) + ft_strlen(insert)));
+	new_string = malloc(ft_strlen(string) + ft_strlen(insert) - skip);
 	if (!new_string)
 		return (NULL);
 	i = 0;
 	j = 0;
 	n = 0;
 	while (i < index)
-		new_string[n++] = string[i++];
-	while (insert[j])
 	{
-		new_string[n++] = insert[j++];
+		new_string[n] = string[i];
+		n++;
 		i++;
 	}
-	i += skip;
+	while (insert[j])
+	{
+		new_string[n] = insert[j];
+		n++;
+		j++;
+	}
+	i = index + skip;
 	while (string[i])
-		new_string[n++] = string[i++];
+	{
+		new_string[n] = string[i];
+		n++;
+		i++;
+	}
 	new_string[n] = '\0';
 	return (new_string);
 }

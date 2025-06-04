@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:08:06 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/29 11:58:12 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/03 19:01:00 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,24 @@ void	signal_handler(int signal)
 		reset_prompt();
 }
 
+void	main_loop(t_gen_data *data, char **env)
+{
+	read_input(data); // get the user input and add it to history
+	if (data->input && *data->input != '\0' && !is_only_spaces(data->input))
+	{
+		parse_input(data, env);
+		generate_heredocs(data, env);
+		if (data->pipe_flag > 0)
+			exec_pipe(data, env);
+		else
+			exec_command(data, env);
+	}
+	free_exec(data);
+	remove_temps(data);
+	data->pipe_flag = 0;
+	data->pipe_index = 0;
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_gen_data	*data;
@@ -38,22 +56,7 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGINT, signal_handler); // we override the SIGINT (ctrl-c) functionallity with our own, so we can get a new prompt
 	read_history(".user_history");
 	while (data->input) // we loop until the input it's NULL on error or by pressing ctrl-d
-	{
-		read_input(data); // get the user input and add it to history
-		if (data->input && *data->input != '\0' && !is_only_spaces(data->input))
-		{
-			parse_input(data, env);
-			generate_heredocs(data, env);
-			if (data->pipe_flag > 0)
-				exec_pipe(data, env);
-			else
-				exec_command(data, env);
-		}
-		free_exec(data);
-		remove_temps(data);
-		data->pipe_flag = 0;
-		data->pipe_index = 0;
-	}
+		main_loop(data, env);
 	write_history(".user_history");
 	free_data(data);
 	free(data);
