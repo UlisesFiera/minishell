@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+void	set_pipe_flag(t_gen_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->executables[i])
+	{
+		if (!strcmp(data->executables[i], "|"))
+			data->pipe_flag++;
+		i++;
+	}
+}
+
 int	pipe_index(t_gen_data *data, char **commands)
 {
 	if (!commands[data->pipe_index])

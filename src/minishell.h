@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/04 08:20:05 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:05:31 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	*ft_strinsert(char *string, char *insert, int index, int skip);
 void	signal_handler(int signal);
 int		is_only_spaces(char *str);
 char	*env_cleaner(char *executable, char **env, t_gen_data *data, char *full_command);
+void	set_pipe_flag(t_gen_data *data);
 
 /* Parsing */
 

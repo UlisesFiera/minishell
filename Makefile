@@ -9,7 +9,7 @@ STD_FLAGS 				= -Wall -Wextra -Werror -L/usr/local/opt/readline/lib -I/usr/local
 SRCS					= src/main.c \
 						  src/read_input.c \
 						  src/parsing/parsing.c \
-						  src/parsing/env_vars.c \
+						  src/parsing/parse_env_vars.c \
 						  src/init_data.c \
 						  src/free_data.c \
 						  src/exec_command.c \
@@ -25,7 +25,7 @@ SRCS					= src/main.c \
 						  src/redirection/from_input.c \
 						  src/redirection/to_output.c \
 						  src/utils/array_cleaner.c \
-						  src/exec_pipe.c \
+						  src/pipes.c \
 						  src/utils/file_finder.c \
 						  src/utils/ft_strinsert.c \
 						  src/builts/echo.c \
