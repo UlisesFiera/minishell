@@ -20,7 +20,15 @@ void	set_pipe_flag(t_gen_data *data)
 	while (data->executables[i])
 	{
 		if (!strcmp(data->executables[i], "|"))
-			data->pipe_flag++;
+		{
+			if (i == 0)
+			{
+				syntax_error(data->executables[i], data);
+				return ;
+			}
+			else
+				data->pipe_flag++;
+		}
 		i++;
 	}
 }
@@ -62,11 +70,6 @@ char	**executables_copy(t_gen_data *data)
 	}
 	copy[i] = NULL;
 	return (copy);
-}
-
-void	pipe_loop(t_gen_data *data, char **env, char **exec_copy)
-{
-	
 }
 
 void	exec_pipe(t_gen_data *data, char **env)

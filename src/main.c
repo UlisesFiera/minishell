@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: ulfernan <ulfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:08:06 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/03 19:01:00 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:40:10 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,14 @@ void	main_loop(t_gen_data *data, char **env)
 	if (data->input && *data->input != '\0' && !is_only_spaces(data->input))
 	{
 		parse_input(data, env);
-		generate_heredocs(data, env);
-		if (data->pipe_flag > 0)
-			exec_pipe(data, env);
-		else
-			exec_command(data, env);
+		if (data->exit_status > 0)
+		{
+			generate_heredocs(data, env);
+			if (data->pipe_flag > 0 && data->exit_status > 0)
+				exec_pipe(data, env);
+			else if (data->exit_status > 0)
+				exec_command(data, env);
+		}
 	}
 	free_exec(data);
 	remove_temps(data);

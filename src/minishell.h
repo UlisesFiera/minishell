@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: ulfernan <ulfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/04 14:08:43 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:49:51 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	set_pipe_flag(t_gen_data *data);
 char	*get_env_var(char *executable, char **env, t_gen_data *data);
 void	parse_env_vars_quotes(t_gen_data *data, char **env, char *command, int index);
 void	replace_env(t_gen_data *data, char **env_paths, char **env);
+void    syntax_error(char *token, t_gen_data *data);
 
 /* Parsing */
 
