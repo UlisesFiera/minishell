@@ -64,6 +64,11 @@ char	**executables_copy(t_gen_data *data)
 	return (copy);
 }
 
+void	pipe_loop(t_gen_data *data, char **env, char **exec_copy)
+{
+	
+}
+
 void	exec_pipe(t_gen_data *data, char **env)
 {
 	int		pipes[2][2];
@@ -101,7 +106,7 @@ void	exec_pipe(t_gen_data *data, char **env)
 			close(pipes[i % 2][1]);
 			data->executables = commands;
 			exec_command(data, env);
-			exit(1);
+			exit(0);
 		}
 		else
 		{

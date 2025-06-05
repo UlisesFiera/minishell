@@ -19,7 +19,7 @@ char	*expand_digit_start(char *executable)
 	char	*final_env;
 
 	i = 0;
-	while (executable[i] >= '0' && executable[i] <= '9')
+	if (executable[i] >= '0' && executable[i] <= '9')
 		i++;
 	index = i;
 	while (executable[i] && executable[i] != ' ')

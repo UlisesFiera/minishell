@@ -1,0 +1,9 @@
+- hay que gestionar el prompt para | ' " ??? (prompt secundario PS2)
+- hay que gestionar que el ejecutable de las redirecciones esté en cualquier posición
+- ulfernan@c2r9s5:~$ cat <<
+    bash: syntax error near unexpected token `newline'
+        en mi caso hay segfault!!
+
+    ulfernan> echo "hola '$USER'"
+        hola 'ulfernan  
+          me falta una comilla
