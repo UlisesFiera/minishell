@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_executables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: ulfernan <ulfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:39:09 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/05/23 18:42:26 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/09 12:20:52 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,12 @@ char	*exec_split(char *input, int *index, int command_index, t_gen_data *data)
 	if (!executable)
 		return (NULL);
 	fill_exec(executable, input, index, quotes);
-	if (quotes == '"')
-		data->quotes[command_index] = 1;
-	else if (quotes == '\'')
-		data->quotes[command_index] = 2;
+	if (data)
+	{
+		if (quotes == '"')
+			data->quotes[command_index] = 1;
+		else if (quotes == '\'')
+			data->quotes[command_index] = 2;
+	}
 	return (executable);
 }

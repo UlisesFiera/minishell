@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:08:06 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/05 20:40:10 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/09 12:59:48 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ void	main_loop(t_gen_data *data, char **env)
 	if (data->input && *data->input != '\0' && !is_only_spaces(data->input))
 	{
 		parse_input(data, env);
-		if (data->exit_status > 0)
+		if (data->exit_status == 0)
 		{
 			generate_heredocs(data, env);
-			if (data->pipe_flag > 0 && data->exit_status > 0)
+			if (data->pipe_flag > 0 && data->exit_status == 0)
 				exec_pipe(data, env);
-			else if (data->exit_status > 0)
+			else if (data->exit_status == 0)
 				exec_command(data, env);
 		}
 	}

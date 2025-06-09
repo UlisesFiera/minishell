@@ -27,7 +27,7 @@ char	**pipe_divider(char **commands, int index)
 
 	i = index - 1; // we skip the | or \0 moving to the left as we will copy from there to the left
 	size = 0;
-	while (i >= 0 && commands[i][0] != '|' && commands[i])
+	while (i >= 0 && commands[i] && commands[i][0] != '|')
 	{
 		size++;
 		i--;
