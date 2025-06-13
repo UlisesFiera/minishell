@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   fill_executables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulfernan <ulfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:39:09 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/09 12:20:52 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:44:33 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	find_quote(char *input, int index) // we check if the quote is grouping a command or if it's single
-{
-	char	quote;
-
-	quote = input[index];
-	index++;
-	while (input[index])
-	{
-		if (input[index] == quote)
-			return (0);
-		index++;
-	}
-	return (1);
-}
 
 int	exec_size(char *input, int i, char *quotes)
 {

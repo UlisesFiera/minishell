@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulfernan <ulfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:08:06 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/09 12:59:48 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:35:51 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	reset_prompt(void)
 {
@@ -29,8 +28,8 @@ void	signal_handler(int signal)
 
 void	main_loop(t_gen_data *data, char **env)
 {
-	read_input(data); // get the user input and add it to history
-	if (data->input && *data->input != '\0' && !is_only_spaces(data->input))
+	read_input(data, data->final_prompt, 1); // get the user input and add it to history
+	if (data->input && *data->input != '\0' && !ft_is_only_spaces(data->input))
 	{
 		parse_input(data, env);
 		if (data->exit_status == 0)

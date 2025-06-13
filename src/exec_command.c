@@ -23,7 +23,7 @@ void	execve_handler(char *cmd_path, t_gen_data *data, char **env)
 	}
 	if (execve(cmd_path, data->executables, env) == -1)
 	{
-		printf("couldn't find command: %s\n", data->executables[0]);
+		printf("couldn't execute command: %s\n", data->executables[0]);
 		free(cmd_path);
 		exit(1);
 	}
@@ -95,7 +95,7 @@ void	exec_command(t_gen_data *data, char **env)
 
 	builts = "echo;cd;pwd;export;unset;env;exit";
 	command = ft_strnstr(builts, data->executables[0], ft_strlen(builts));
-	if (command)
+	if (command && ft_strlen(command) > 2)
 		exec_builts(data, data->executables[0]);
 	else
 		exec_env(data, env);

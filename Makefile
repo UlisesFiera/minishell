@@ -12,15 +12,17 @@ SRCS					= src/main.c \
 						  src/parsing/parse_env_vars.c \
 						  src/parsing/expand_env_utils.c \
 						  src/parsing/expand_env.c \
+						  src/utils/check_closing_quotes.c \
+						  src/parsing/fill_executables.c \
 						  src/init_data.c \
 						  src/free_data.c \
 						  src/exec_command.c \
-						  src/utils/fill_executables.c \
 						  src/utils/quotes_handle.c \
 						  src/utils/ft_get_path.c \
 						  src/utils/ft_free_tab.c \
 						  src/utils/ft_get_env.c \
 						  src/utils/ft_strcmp.c \
+						  src/utils/ft_is_only_spaces.c \
 						  src/redirection/redirections.c \
 						  src/redirection/append.c \
 						  src/redirection/heredoc.c \
