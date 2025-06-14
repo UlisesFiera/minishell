@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:45:42 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/13 16:19:01 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/14 14:58:28 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,20 @@ void	check_secondary_prompt(t_gen_data *data)
 {
 	int	i;
 
+	if (!data->input)
+		return ;
 	i = 0;
 	while (data->input[i])
 		i++;
+	if (i == 0)
+		return ;
 	if (data->input[i - 1] == '|' && data->input[i] == '\0')
 	{
 		prompt_for_pipes(data);
 		return ;
 	}
 	else if ((data->input[i - 1] ==  '\'' || data->input[i - 1] ==  '"')
-			&& data->input[i] == '\0')
+			&& data->input[i] == '\0' && odd_quotes(data->input, i - 1))
 	{
 		prompt_for_quotes(data, data->input[i - 1], i);
 		return ;

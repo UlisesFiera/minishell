@@ -24,7 +24,7 @@ int	env_var_count(t_gen_data *data, char **env)
 	{
 		if (data->quotes[i] == 1)
 			parse_env_vars_quotes(data, env, data->executables[i], i);
-		if (data->quotes[i] != 2)
+		else if (data->quotes[i] != 2)
 		{
 			j = 0;
 			while(data->executables[i][j])
@@ -52,6 +52,34 @@ void	env_var_check(t_gen_data *data, char **env)
 	replace_env(data, env_paths, env);
 }
 
+void	null_exec_cleaner(t_gen_data *data)
+{
+	char	**clean_array;
+	int		size;
+	int		i;
+
+	clean_array = NULL;
+	size = 0;
+	i = 0;
+	while (data->executables[i])
+	{
+		if (data->executables[i][0] != '\0')
+			size++;
+		i++;
+	}
+	clean_array = malloc(sizeof(char *) * size + 1);
+	clean_array[size] = NULL;
+	i = 0;
+	size = 0;
+	while (data->executables[i])
+	{
+		if (data->executables[i][0] != '\0')
+			clean_array[size++] = data->executables[i];
+		i++;
+	}
+	data->executables = clean_array;
+}
+
 void	parse_input(t_gen_data *data, char **env)
 {
 	int		exec_count;
@@ -71,6 +99,7 @@ void	parse_input(t_gen_data *data, char **env)
 		data->executables[i] = exec_split(data->input, &index, i, data);
 		i++;
 	}
+	null_exec_cleaner(data);
 	env_var_check(data, env);
 	set_pipe_flag(data);
 }

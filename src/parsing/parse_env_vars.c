@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 08:07:42 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/04 13:28:04 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/14 15:41:28 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,24 @@ void	replace_env(t_gen_data *data, char **env_paths, char **env)
 void	parse_env_vars_quotes(t_gen_data *data, char **env, char *command, int index)
 {
 	char	*new_string;
+	char	*last_q;
+	char	*final_string;
+	int		i;
 
-	new_string = parse_env_vars(data, command, env);
-	free(data->executables[index]);
-	data->executables[index] = new_string;
+	new_string = ft_strdup(parse_env_vars(data, command, env));
+	i = 1;
+	while (command[i] != '\0' && command[i] != '\'')
+		i++;
+	if (command[i] == '\'')
+	{
+		last_q = &data->executables[index][i];
+		final_string = ft_strjoin(new_string, last_q);
+		free(data->executables[index]);
+		data->executables[index] = final_string;
+	}
+	else
+	{
+		free(data->executables[index]);
+		data->executables[index] = new_string;
+	}
 }

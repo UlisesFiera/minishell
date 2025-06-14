@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:39:09 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/13 14:44:33 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:49:18 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ int	exec_size(char *input, int i, char *quotes)
 	size = 0;
 	while (input[i] == ' ')
 		i++;
-	while (input[i] != '\0' && (*quotes != '\0' || input[i] != ' '))
+	if (input[i] == '\'' || input[i] == '"')
 	{
-		if ((input[i] == '"' || input[i] == '\'') && !find_quote(input, i))
+		*quotes = input[i];
+		i++;
+	}
+	while (input[i] && input[i] != ' ' && input[i] != *quotes)
+	{
+		if (input[i] == '\'' || input[i] == '"')
 		{
-			*quotes = input[i];
-			while (input[++i] != '\0' && input[i] != *quotes)
-				size++;
-			if (input[i] == *quotes)
-				i++;
+			if (!find_quote(input, i))
+				return (size - 1);
 		}
-		else
-		{
-			size++;
-			i++;
-		}
+		size++;
+		i++;
+
 	}
 	return (size);
 }
@@ -56,7 +56,17 @@ static void	fill_exec(char *executable, char *input, int *index, char quotes)
 	else
 	{
 		while (input[*index] != '\0' && input[*index] != ' ')
+		{
+			if (input[*index] == '\'' || input[*index] == '"')
+			{
+				if (!find_quote(input, *index))
+				{
+					executable[i] = '\0';
+					return ;
+				}
+			}
 			executable[i++] = input[(*index)++];
+		}
 	}
 	executable[i] = '\0';
 }

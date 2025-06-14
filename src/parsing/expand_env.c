@@ -41,7 +41,7 @@ char	*expand_exit(t_gen_data *data)
 	char	*final_env;
 	int		exit_status;
 
-	exit_status = WEXITSTATUS(data->exit_status);
+	exit_status = WEXITSTATUS(data->last_exit_status);
 	final_env = ft_itoa(exit_status);
 	return (final_env);
 }

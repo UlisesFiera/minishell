@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/13 15:43:51 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:59:13 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_gen_data
 	int		*tmp_fds;
 	char	**tmp_filenames;
 	int		exit_status;
+	int		last_exit_status;
 } 	t_gen_data;
 
 /* Shell functionalities */

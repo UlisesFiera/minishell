@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:08:06 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/13 15:35:51 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/14 14:16:22 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	signal_handler(int signal)
 
 void	main_loop(t_gen_data *data, char **env)
 {
+	data->exit_status = 0;
 	read_input(data, data->final_prompt, 1); // get the user input and add it to history
 	if (data->input && *data->input != '\0' && !ft_is_only_spaces(data->input))
 	{

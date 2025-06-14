@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulfernan <ulfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 08:47:54 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/05 20:38:09 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:59:02 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	*init_data_handler(t_gen_data *data)
 	data->output_fd = -1;
 	data->pipe_index = 0;
 	data->exit_status = 0;
+	data->last_exit_status = 0;
 	return (data);
 }
 
