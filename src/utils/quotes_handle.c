@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:56:42 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/14 16:43:23 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:43:00 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	skip_single_quote(char *input, int *i)
 {
 	if (!find_quote(input, *i))
 	{
+		(*i)++;
 		while (input[*i] != '\0' && input[*i] != '\'')
 			(*i)++;
 	}
@@ -25,6 +26,7 @@ void	skip_double_quote(char *input, int *i)
 {
 	if (!find_quote(input, *i))
 	{
+		(*i)++;
 		while (input[*i] != '\0' && input[*i] != '"')
 			(*i)++;
 	}
@@ -34,12 +36,14 @@ int	exec_counter(char *input)
 {
 	int		exec_count;
 	int		q_flag;
+	int		p_flag;
 	int		i;
 
 	exec_count = 0;
 	i = 0;
 	while (input[i])
 	{
+		p_flag = 0;
 		q_flag = 0;
 		while (input[i] == ' ')
 			i++;
@@ -54,8 +58,15 @@ int	exec_counter(char *input)
 			q_flag = 1;
 			i++;
 		}
-		while (input[i] != '\0' && input[i] != ' ' && !q_flag)
+		while (input[i] != '\0' && input[i] != ' ' && !q_flag && !p_flag)
+		{
+			if (input[i] == '|')
+			{
+				p_flag = 1;
+				exec_count++;
+			}
 			i++;
+		}
 	}
 	return (exec_count);
 }

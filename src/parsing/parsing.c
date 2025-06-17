@@ -22,6 +22,7 @@ int	env_var_count(t_gen_data *data, char **env)
 	i = 0;
 	while (data->executables[i])
 	{
+		//printf("entering %s index %i\n", data->executables[i], i);
 		if (data->quotes[i] == 1)
 			parse_env_vars_quotes(data, env, data->executables[i], i);
 		else if (data->quotes[i] != 2)
@@ -55,6 +56,7 @@ void	env_var_check(t_gen_data *data, char **env)
 void	null_exec_cleaner(t_gen_data *data)
 {
 	char	**clean_array;
+	int		*updated_quotes;
 	int		size;
 	int		i;
 
@@ -68,16 +70,23 @@ void	null_exec_cleaner(t_gen_data *data)
 		i++;
 	}
 	clean_array = malloc(sizeof(char *) * size + 1);
+	updated_quotes = malloc(sizeof(int) * size);
 	clean_array[size] = NULL;
 	i = 0;
 	size = 0;
 	while (data->executables[i])
 	{
 		if (data->executables[i][0] != '\0')
-			clean_array[size++] = data->executables[i];
+		{
+			clean_array[size] = data->executables[i];
+			updated_quotes[size] = data->quotes[i];
+			size++;
+		}
+
 		i++;
 	}
 	data->executables = clean_array;
+	data->quotes = updated_quotes;
 }
 
 void	parse_input(t_gen_data *data, char **env)

@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:45:42 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/14 14:58:28 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/17 19:00:26 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ char	*read_input(t_gen_data *data, char *prompt, int check_on)
 {
 	free(data->input);
 	data->input = readline(prompt);
+	data->lineno++;
 	if (check_on == 1)
 		check_secondary_prompt(data);
 	if (!data->input) // readline returns NULL when the user presses ctrl-D, which terminates the shell

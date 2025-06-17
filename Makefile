@@ -34,6 +34,8 @@ SRCS					= src/main.c \
 						  src/utils/ft_strinsert.c \
 						  src/builts/echo.c \
 						  src/errors.c \
+						  src/welcome_message.c \
+						  src/signal.c \
 
 
 OBJS					= ${SRCS:.c=.o}

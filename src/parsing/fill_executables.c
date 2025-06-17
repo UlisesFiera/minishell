@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:39:09 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/14 17:49:18 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/17 19:32:36 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,23 @@ int	exec_size(char *input, int i, char *quotes)
 			if (!find_quote(input, i))
 				return (size - 1);
 		}
+		else if (input[i] == '|')
+		{
+			if (i == 0)
+				return (1);
+			return (size - 1);
+		}
 		size++;
 		i++;
-
 	}
 	return (size);
+}
+
+void	pipe_executable(int *index, char *executable)
+{
+	executable[0] = '|';
+	executable[1] = '\0';
+	(*index)++;
 }
 
 static void	fill_exec(char *executable, char *input, int *index, char quotes)
@@ -53,6 +65,11 @@ static void	fill_exec(char *executable, char *input, int *index, char quotes)
 		if (input[*index] == quotes)
 			(*index)++;
 	}
+	else if (input[*index] == '|')
+	{
+		pipe_executable(index, executable);
+		return ;
+	}
 	else
 	{
 		while (input[*index] != '\0' && input[*index] != ' ')
@@ -64,6 +81,11 @@ static void	fill_exec(char *executable, char *input, int *index, char quotes)
 					executable[i] = '\0';
 					return ;
 				}
+			}
+			else if (input[*index] == '|')
+			{
+					executable[i] = '\0';
+					return ;
 			}
 			executable[i++] = input[(*index)++];
 		}
@@ -81,7 +103,7 @@ char	*exec_split(char *input, int *index, int command_index, t_gen_data *data)
 	i = *index;
 	quotes = '\0';
 	size = exec_size(input, i, &quotes);
-	executable = malloc(sizeof(char) * size + 1);
+	executable = malloc(sizeof(char) * (size + 1));
 	if (!executable)
 		return (NULL);
 	fill_exec(executable, input, index, quotes);
@@ -92,5 +114,6 @@ char	*exec_split(char *input, int *index, int command_index, t_gen_data *data)
 		else if (quotes == '\'')
 			data->quotes[command_index] = 2;
 	}
+	//printf("exec %i is %s and quotes is %c now data quotes is %i with index %i\n", command_index, executable, quotes, data->quotes[command_index], command_index);
 	return (executable);
 }

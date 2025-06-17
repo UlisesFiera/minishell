@@ -81,13 +81,15 @@ char	**array_cleaner_left(t_gen_data *data) // we get an array with everything b
 	clean_array[count] = NULL;
 	i = 0;
 	j = 0;
-	while (i < count)
+	while (data->executables[i])
 	{
+		if (j >= count)
+			return (clean_array);
 		while (ft_strnstr(symbol, data->executables[i], ft_strlen(symbol)))
 			i += 2;
 		clean_array[j] = data->executables[i];
 		i++;
-		j++; 
+		j++;
 	}
 	return (clean_array);
 }

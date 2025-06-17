@@ -16,16 +16,16 @@ void	input_child(char *file, char *cmd_path, t_gen_data *data)
 {
 	int	fd;
 
-	if (!cmd_path)
-	{
-		printf("couldn't find command: %s\n", data->executables[0]);
-		free(cmd_path);
-		exit(1);
-	}
 	fd = open(file, O_RDONLY, 0777);
 	if (fd == -1)
 	{
-		printf("couldn't open file: %s\n", file);
+		printf("-minishell: %s: No such file or directory\n", file);
+		free(cmd_path);
+		exit(1);
+	}
+	if (!cmd_path)
+	{
+		printf("couldn't find command: %s\n", data->executables[data->executable_pos]);
 		free(cmd_path);
 		exit(1);
 	}

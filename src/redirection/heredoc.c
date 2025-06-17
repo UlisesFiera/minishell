@@ -30,12 +30,21 @@ void	collect_input(t_gen_data *data, int index, int count, char **env)
 	char	*delimiter;
 	char	*line;
 
+	data->executable_pos = find_executable(data);
+	if (data->executable_pos < 0)
+	{
+		data->exit_status = 1;
+		return ;
+	}
 	delimiter = data->executables[index + 1];
 	data->tmp_filenames[count] = file_name_generator(count);
 	data->tmp_fds[count] = open(data->tmp_filenames[count], O_CREAT | O_RDWR, 0644);
 	line = readline("> ");
 	if (!line)
+	{
+		printf("-minishell: warning: here-document at line %i delimited by end-of-file (wanted %s)\n", data->lineno, delimiter);
 		return ;
+	}
 	if (data->quotes[index + 1] != 2)
 		line = parse_env_vars(data, line, env);
 	while (line && ft_strcmp(line, delimiter))
@@ -44,6 +53,11 @@ void	collect_input(t_gen_data *data, int index, int count, char **env)
 		write(data->tmp_fds[count], "\n", 1);
 		free(line);
 		line = readline("> ");
+		if (!line)
+		{
+			line = delimiter;
+			printf("-minishell: warning: here-document at line %i delimited by end-of-file (wanted %s)\n", data->lineno, delimiter);
+		}
 		line = parse_env_vars(data, line, env);
 	}
 	close(data->tmp_fds[count]);

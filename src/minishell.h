@@ -6,12 +6,14 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/13 16:59:13 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:59:49 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# define YELLOW "\033[33m"
+# define RESET  "\033[0m"
 
 # include "../libft/libft.h"
 # include <stdio.h>
@@ -28,8 +30,11 @@
 # include <termios.h>
 # include <termcap.h>
 # include <sys/ioctl.h>
+# include <dirent.h>
 
 /* Data structs */
+
+extern int	interrupt_heredoc;
 
 typedef struct s_gen_data
 {
@@ -46,6 +51,8 @@ typedef struct s_gen_data
 	char	**tmp_filenames;
 	int		exit_status;
 	int		last_exit_status;
+	int		executable_pos;
+	int		lineno;
 } 	t_gen_data;
 
 /* Shell functionalities */
@@ -86,6 +93,10 @@ int		syntax_check(char *line, t_gen_data *data);
 int		find_quote(char *input, int index);
 int		reverse_find_quote(char *input, int index);
 int 	odd_quotes(char *input, int index);
+void	welcome_message(t_gen_data *data);
+void	signal_handler(int signal);
+void	reset_prompt(void);
+void	signal_handler_redir(int signal);
 
 /* Parsing */
 
@@ -100,7 +111,8 @@ void	exec_append(t_gen_data *data, int index, char *cmd_path);
 void	exec_heredoc(t_gen_data *data, int index, int count);
 void	generate_heredocs(t_gen_data *data, char **env);
 void	collect_input(t_gen_data *data, int index, int count, char **env);
-void	remove_temps(t_gen_data *data);
+void	remove_temps();
+int		find_executable(t_gen_data *data);
 
 /* Built-ins */
 

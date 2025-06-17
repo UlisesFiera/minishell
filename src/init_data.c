@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 08:47:54 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/13 16:59:02 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/17 19:00:06 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,20 @@ void	generate_heredocs(t_gen_data *data, char **env)
 void	*load_username(t_gen_data *data)
 {
 	char	*symbol;
+	char	*colored_username;
+	char	*tmp;
 
 	data->username = getenv("USER");
+	colored_username = ft_strjoin(YELLOW, data->username);
+	if (!colored_username)
+		return (NULL);
 	symbol = "> ";
-	data->final_prompt = ft_strjoin(data->username, symbol);
+	tmp = ft_strjoin(colored_username, symbol);
+	if (!tmp)
+		return (NULL);
+	free(colored_username);
+	data->final_prompt = ft_strjoin(tmp, RESET);
+	free(tmp);
 	if (!data->final_prompt)
 		return (NULL);
 	return (data);
@@ -81,6 +91,7 @@ void	*init_data_handler(t_gen_data *data)
 	data->pipe_index = 0;
 	data->exit_status = 0;
 	data->last_exit_status = 0;
+	data->lineno = 0;
 	return (data);
 }
 

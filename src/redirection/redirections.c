@@ -12,14 +12,14 @@
 
 #include "../minishell.h"
 
-void	redirect_setter(t_gen_data *data, char *cmd_path)
+void	redirect_setter(t_gen_data *data, char *cmd_path, char **env)
 {
 	int	i;
 	int	count;
 
 	i = 0;
 	count = 0;
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, signal_handler_redir);
 	while (data->executables[i])
 	{
 		if (!ft_strcmp(data->executables[i], "<"))
@@ -30,6 +30,7 @@ void	redirect_setter(t_gen_data *data, char *cmd_path)
 			exec_append(data, i, cmd_path);
 		else if (!ft_strcmp(data->executables[i], "<<"))
 		{
+			generate_heredocs(data, env);
 			exec_heredoc(data, i, count);
 			count++;
 		}
@@ -40,7 +41,7 @@ void	redirect_setter(t_gen_data *data, char *cmd_path)
 void	child_redirect_handler(t_gen_data *data, char **clean_commands, 
 								char **env, char *cmd_path)
 {
-	redirect_setter(data, cmd_path);
+	redirect_setter(data, cmd_path, env);
 	if (!env)
 	{
 		if (!ft_strcmp(clean_commands[0], "echo"))
@@ -50,11 +51,34 @@ void	child_redirect_handler(t_gen_data *data, char **clean_commands,
 	{
 		if (execve(cmd_path, clean_commands, env) == -1)
 		{
-			printf("couldn't find command: %s\n", data->executables[0]);
+			printf("couldn't find command: %s\n", data->executables[data->executable_pos]);
 			free(cmd_path);
 			exit(1);
 		}
 	}
+}
+
+int	find_executable(t_gen_data *data)
+{
+	int	i;
+
+	if (!ft_strcmp(data->executables[0], "<") ||
+			!ft_strcmp(data->executables[0], "<<") ||
+			!ft_strcmp(data->executables[0], ">") ||
+			!ft_strcmp(data->executables[0], ">>"))
+		return (2);
+	i = 0;
+	while (data->executables[i])
+		i++;
+	if (!ft_strcmp(data->executables[i - 1], "<") ||
+			!ft_strcmp(data->executables[i - 1], "<<") ||
+			!ft_strcmp(data->executables[i - 1], ">") ||
+			!ft_strcmp(data->executables[i - 1], ">>"))
+	{
+		syntax_error("\n", data);
+		return (-1);
+	}
+	return (0);
 }
 
 void	redirect_handler(t_gen_data *data, char **clean_commands, char **env)
@@ -63,7 +87,7 @@ void	redirect_handler(t_gen_data *data, char **clean_commands, char **env)
 	pid_t	pid;
 
 	if (env)
-		cmd_path = ft_get_path(data->executables[0], env);
+		cmd_path = ft_get_path(data->executables[data->executable_pos], env);
 	else
 		cmd_path = "unused";
 	signal(SIGINT, SIG_IGN);
@@ -98,6 +122,9 @@ int	redirect(t_gen_data *data, char **env)
 				!ft_strcmp(data->executables[i], ">") ||
 				!ft_strcmp(data->executables[i], ">>"))
 		{
+			data->executable_pos = find_executable(data);
+			if (data->executable_pos < 0)
+				return (1);
 			clean_commands = array_cleaner_left(data);
 			redirect_handler(data, clean_commands, env);
 			free(clean_commands);
