@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 08:47:54 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/17 19:00:06 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:15:56 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ void	generate_heredocs(t_gen_data *data, char **env)
 			count++;
 		i++;
 	}
-	data->tmp_fds = malloc(sizeof(int) * count);
+	data->tmp_fds = malloc(sizeof(int) * (count + 1));
 	data->tmp_filenames = malloc(sizeof(char *) * (count + 1));
 	data->tmp_filenames[count] = NULL;
+	data->tmp_fds[count] = -1;
 	i = 0;
 	count = 0;
 	while (data->executables[i])
@@ -84,6 +85,8 @@ void	*init_data_handler(t_gen_data *data)
 	data->input[0] = '\0'; 
 	if (!load_username(data))
 		return (NULL);
+	data->tmp_filenames = NULL;
+	data->tmp_fds = NULL;
 	data->executables = NULL;
 	data->pipe_flag = 0;
 	data->input_fd = -1;

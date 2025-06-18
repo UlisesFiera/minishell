@@ -16,7 +16,9 @@ void	redirect_setter(t_gen_data *data, char *cmd_path, char **env)
 {
 	int	i;
 	int	count;
+	int	heredoc_flag;
 
+	heredoc_flag = 0;
 	i = 0;
 	count = 0;
 	signal(SIGINT, signal_handler_redir);
@@ -30,11 +32,15 @@ void	redirect_setter(t_gen_data *data, char *cmd_path, char **env)
 			exec_append(data, i, cmd_path);
 		else if (!ft_strcmp(data->executables[i], "<<"))
 		{
-			generate_heredocs(data, env);
-			exec_heredoc(data, i, count);
+			heredoc_flag = 1;
 			count++;
 		}
 		i++;
+	}
+	if (heredoc_flag == 1)
+	{
+		generate_heredocs(data, env);
+		exec_heredoc(data, i, count);
 	}
 }
 

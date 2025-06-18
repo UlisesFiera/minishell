@@ -42,7 +42,7 @@ void	collect_input(t_gen_data *data, int index, int count, char **env)
 	line = readline("> ");
 	if (!line)
 	{
-		printf("-minishell: warning: here-document at line %i delimited by end-of-file (wanted %s)\n", data->lineno, delimiter);
+		printf("-minishell: warning: here-document at line %i delimited by end-of-file (wanted %s) heredoc %i\n", data->lineno, delimiter, count);
 		return ;
 	}
 	if (data->quotes[index + 1] != 2)
@@ -56,9 +56,11 @@ void	collect_input(t_gen_data *data, int index, int count, char **env)
 		if (!line)
 		{
 			line = delimiter;
-			printf("-minishell: warning: here-document at line %i delimited by end-of-file (wanted %s)\n", data->lineno, delimiter);
+			printf("-minishell: warning: here-document at line %i delimited by end-of-file (wanted %s) heredoc %i\n", data->lineno, delimiter, count);
+			return ;
 		}
-		line = parse_env_vars(data, line, env);
+		if (data->quotes[index + 1] != 2)
+			line = parse_env_vars(data, line, env);
 	}
 	close(data->tmp_fds[count]);
 	data->tmp_fds[count] = open(data->tmp_filenames[count], O_RDONLY, 0644); // must close again in free data
@@ -68,9 +70,22 @@ void	collect_input(t_gen_data *data, int index, int count, char **env)
 void	exec_heredoc(t_gen_data *data, int index, int count)
 {
 	(void)index;
+	(void)count;
+	int	i;
+	int	final_fd;
 
 	if (!data->tmp_fds)
 		exit(0);
-	dup2(data->tmp_fds[count], 0);
+	i = 0;
+	while (data->tmp_fds[i] != -1)
+		i++;
+	final_fd = data->tmp_fds[i - 1];
+	i = 0;
+	while (data->tmp_fds[i] != final_fd)
+	{
+		close(data->tmp_fds[i]);
+		i++;
+	}
+	dup2(final_fd, 0);
 	count++;
 }

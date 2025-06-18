@@ -6,11 +6,25 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 09:24:20 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/17 18:47:27 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:11:58 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_tmp_filenames(t_gen_data *data)
+{
+	int	i;
+
+	i = 0;
+	if (data->tmp_filenames)
+	{
+		while (data->tmp_filenames[i])
+			free(data->tmp_filenames[i++]);
+		free(data->tmp_filenames);
+	}
+	free(data->tmp_fds);
+}
 
 void	free_exec(t_gen_data *data)
 {

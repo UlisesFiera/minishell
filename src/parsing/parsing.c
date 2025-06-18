@@ -69,7 +69,7 @@ void	null_exec_cleaner(t_gen_data *data)
 			size++;
 		i++;
 	}
-	clean_array = malloc(sizeof(char *) * size + 1);
+	clean_array = malloc(sizeof(char *) * (size + 1));
 	updated_quotes = malloc(sizeof(int) * size);
 	clean_array[size] = NULL;
 	i = 0;

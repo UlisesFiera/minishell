@@ -22,8 +22,10 @@ void	reset_prompt(void)
 
 void	signal_handler(int signum)
 {
-	if (signum == SIGINT && isatty(0))
+	if (signum == SIGINT && isatty(0) && in_secondary_prompt == 0)
 		reset_prompt();
+	if (signum == SIGINT && isatty(0) && in_secondary_prompt == 1)
+		close(0);
 }
 
 void	signal_handler_redir(int signum)

@@ -6,14 +6,14 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/17 18:59:49 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:00:58 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# define YELLOW "\033[33m"
-# define RESET  "\033[0m"
+# define YELLOW "\001\033[33m\002"
+# define RESET  "\001\033[0m\002"
 
 # include "../libft/libft.h"
 # include <stdio.h>
@@ -34,7 +34,7 @@
 
 /* Data structs */
 
-extern int	interrupt_heredoc;
+extern int	in_secondary_prompt;
 
 typedef struct s_gen_data
 {
@@ -97,6 +97,8 @@ void	welcome_message(t_gen_data *data);
 void	signal_handler(int signal);
 void	reset_prompt(void);
 void	signal_handler_redir(int signal);
+void	free_tmp_filenames(t_gen_data *data);
+void	env_var_check(t_gen_data *data, char **env);
 
 /* Parsing */
 

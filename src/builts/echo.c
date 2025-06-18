@@ -21,9 +21,7 @@ void	echo(t_gen_data *data, char **commands)
 	while (commands[i])
 	{
 		write(1, commands[i], ft_strlen(commands[i]));
-		if (commands[i + 1])
-			write(1, " ", 1);
-		else
+		if (!commands[i + 1])
 			write(1, "\n", 1);
 		i++;
 	}

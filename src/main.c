@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:08:06 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/17 18:24:56 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:54:30 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	main_loop(t_gen_data *data, char **env)
 {
 	data->exit_status = 0;
 	read_input(data, data->final_prompt, 1); // get the user input and add it to history
+	in_secondary_prompt = 0;
 	if (data->input && *data->input != '\0' && !ft_is_only_spaces(data->input))
 	{
 		parse_input(data, env);
@@ -29,6 +30,7 @@ void	main_loop(t_gen_data *data, char **env)
 	}
 	free_exec(data);
 	remove_temps();
+	free_tmp_filenames(data);
 	data->pipe_flag = 0;
 	data->pipe_index = 0;
 }
