@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 09:24:20 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/18 18:11:58 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:22:47 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ void	free_exec(t_gen_data *data)
 	i = 0;
 	if (data->executables)
 	{
-		while (data->executables[i])
+		while (i < data->exec_count)
 		{
-			free(data->executables[i]);
+			if (data->executables[i])
+				free(data->executables[i]);
 			i++;
 		}
 		free(data->executables);
 		data->executables = NULL;
 	}
-	data->pipe_flag = 0;
 }
 
 void	remove_temps()
@@ -82,4 +82,18 @@ void	free_data(t_gen_data *data)
 		free(data->tmp_fds);
 		data->tmp_fds = NULL;
 	}
+	if (data->exec_copy)
+		ft_free_tab(data->exec_copy);
+	free_exec(data);
+}
+
+void	reset_data(t_gen_data *data)
+{
+	if (data->quotes)
+	{
+		free(data->quotes);
+		data->quotes = NULL;
+	}
+	data->pipe_flag = 0;
+	data->pipe_index = 0;
 }

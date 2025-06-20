@@ -76,19 +76,18 @@ void	exec_pipe(t_gen_data *data, char **env)
 {
 	int		pipes[2][2];
 	pid_t	pid1;
-	char	**exec_copy;
 	char	**commands;
 	int		index;
 	int		i;
 
-	exec_copy = executables_copy(data);
+	data->exec_copy = executables_copy(data);
 	i = 0;
 	index = 0;
 	while (i <= data->pipe_flag)
 	{
 		if (pipe(pipes[i % 2]) == -1)
 			ft_printf("pipe failure\n");
-		index = pipe_index(data, exec_copy);
+		index = pipe_index(data, data->exec_copy);
 		signal(SIGINT, SIG_IGN);
 		pid1 = fork();
 		if (pid1 < 0)
@@ -96,7 +95,7 @@ void	exec_pipe(t_gen_data *data, char **env)
 		if (!pid1)
 		{
 			signal(SIGINT, SIG_DFL);
-			commands = pipe_divider(exec_copy, index);
+			commands = pipe_divider(data->exec_copy, index);
 			if (i > 0)
 			{
 				dup2(pipes[(i + 1) % 2][0], 0);

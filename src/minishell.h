@@ -6,13 +6,13 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/18 17:00:58 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:20:16 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# define YELLOW "\001\033[33m\002"
+# define GREEN "\001\033[38;5;22m\002"
 # define RESET  "\001\033[0m\002"
 
 # include "../libft/libft.h"
@@ -53,6 +53,10 @@ typedef struct s_gen_data
 	int		last_exit_status;
 	int		executable_pos;
 	int		lineno;
+	int		exec_count;
+	char	**clean_array;
+	int		*updated_quotes;
+	char	**exec_copy;
 } 	t_gen_data;
 
 /* Shell functionalities */
@@ -99,6 +103,7 @@ void	reset_prompt(void);
 void	signal_handler_redir(int signal);
 void	free_tmp_filenames(t_gen_data *data);
 void	env_var_check(t_gen_data *data, char **env);
+void	reset_data(t_gen_data *data);
 
 /* Parsing */
 

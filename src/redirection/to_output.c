@@ -20,13 +20,15 @@ void	output_child(char *file, char *cmd_path, t_gen_data *data)
 	if (fd == -1)
 	{
 		printf("-minishell: %s: No such file or directory\n", file);
-		free(cmd_path);
+		if (ft_strcmp(cmd_path, "unused"))
+			free(cmd_path);
 		exit(1);
 	}
 	if (!cmd_path)
 	{
 		printf("couldn't find command: %s\n", data->executables[data->executable_pos]);
-		free(cmd_path);
+		if (ft_strcmp(cmd_path, "unused"))
+			free(cmd_path);
 		exit(1);
 	}
 	dup2(fd, 1);

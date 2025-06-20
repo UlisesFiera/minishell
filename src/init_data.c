@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 08:47:54 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/18 18:15:56 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:01:11 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	*load_username(t_gen_data *data)
 	char	*tmp;
 
 	data->username = getenv("USER");
-	colored_username = ft_strjoin(YELLOW, data->username);
+	colored_username = ft_strjoin(GREEN, data->username);
 	if (!colored_username)
 		return (NULL);
 	symbol = "> ";

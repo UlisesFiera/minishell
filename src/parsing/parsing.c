@@ -55,12 +55,10 @@ void	env_var_check(t_gen_data *data, char **env)
 
 void	null_exec_cleaner(t_gen_data *data)
 {
-	char	**clean_array;
-	int		*updated_quotes;
 	int		size;
 	int		i;
 
-	clean_array = NULL;
+	data->clean_array = NULL;
 	size = 0;
 	i = 0;
 	while (data->executables[i])
@@ -69,24 +67,27 @@ void	null_exec_cleaner(t_gen_data *data)
 			size++;
 		i++;
 	}
-	clean_array = malloc(sizeof(char *) * (size + 1));
-	updated_quotes = malloc(sizeof(int) * size);
-	clean_array[size] = NULL;
+	data->clean_array = malloc(sizeof(char *) * (size + 1));
+	data->updated_quotes = malloc(sizeof(int) * size);
+	data->clean_array[size] = NULL;
 	i = 0;
 	size = 0;
 	while (data->executables[i])
 	{
 		if (data->executables[i][0] != '\0')
 		{
-			clean_array[size] = data->executables[i];
-			updated_quotes[size] = data->quotes[i];
+			data->clean_array[size] = data->executables[i];
+			data->updated_quotes[size] = data->quotes[i];
 			size++;
 		}
-
+		else
+			free(data->executables[i]);
 		i++;
 	}
-	data->executables = clean_array;
-	data->quotes = updated_quotes;
+	free(data->quotes);
+	free(data->executables);
+	data->executables = data->clean_array;
+	data->quotes = data->updated_quotes;
 }
 
 void	parse_input(t_gen_data *data, char **env)
@@ -96,6 +97,7 @@ void	parse_input(t_gen_data *data, char **env)
 	int		i;
 
 	exec_count = exec_counter(data->input);
+	data->exec_count = exec_count;
 	data->executables = malloc(sizeof(char *) * (exec_count + 1));
 	if (!data->executables)
 		return ;

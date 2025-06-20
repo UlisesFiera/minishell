@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:39:09 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/18 12:21:23 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:53:02 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	exec_size(char *input, int i, char *quotes)
 		}
 		else if (input[i] == '|')
 		{
-			if (i == 0)
-				return (1);
-			return (size - 1);
+			if (size == 0)
+				size++;
+			return (size);
 		}
 		size++;
 		i++;
@@ -114,6 +114,6 @@ char	*exec_split(char *input, int *index, int command_index, t_gen_data *data)
 		else if (quotes == '\'')
 			data->quotes[command_index] = 2;
 	}
-	//printf("exec %i is %s and quotes is %c now data quotes is %i with index %i\n", command_index, executable, quotes, data->quotes[command_index], command_index);
+	//printf("exec %i is %s with size %i\n", command_index, executable, size);
 	return (executable);
 }

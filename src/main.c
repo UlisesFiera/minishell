@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:08:06 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/18 17:54:30 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:36:01 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void	main_loop(t_gen_data *data, char **env)
 	free_exec(data);
 	remove_temps();
 	free_tmp_filenames(data);
-	data->pipe_flag = 0;
-	data->pipe_index = 0;
+	reset_data(data);
 }
 
 int	main(int argc, char **argv, char **env)

@@ -19,7 +19,7 @@ char	*ft_strinsert(char *string, char *insert, int index, int skip)
 	int		j;
 	int		n;
 
-	new_string = malloc(ft_strlen(string) + ft_strlen(insert) - skip);
+	new_string = malloc(ft_strlen(string) + ft_strlen(insert) - skip + 1);
 	if (!new_string)
 		return (NULL);
 	i = 0;

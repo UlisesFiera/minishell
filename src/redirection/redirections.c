@@ -55,10 +55,17 @@ void	child_redirect_handler(t_gen_data *data, char **clean_commands,
 	}
 	else
 	{
+		if (!clean_commands)
+		{
+			if (ft_strcmp(cmd_path, "unused"))
+				free(cmd_path);
+			exit(1);
+		}
 		if (execve(cmd_path, clean_commands, env) == -1)
 		{
 			printf("couldn't find command: %s\n", data->executables[data->executable_pos]);
-			free(cmd_path);
+			if (ft_strcmp(cmd_path, "unused"))
+				free(cmd_path);
 			exit(1);
 		}
 	}
@@ -72,7 +79,14 @@ int	find_executable(t_gen_data *data)
 			!ft_strcmp(data->executables[0], "<<") ||
 			!ft_strcmp(data->executables[0], ">") ||
 			!ft_strcmp(data->executables[0], ">>"))
+	{
+		if (!data->executables[1])
+		{
+			syntax_error("\n", data);
+			return (-1);
+		}
 		return (2);
+	}
 	i = 0;
 	while (data->executables[i])
 		i++;
@@ -93,7 +107,12 @@ void	redirect_handler(t_gen_data *data, char **clean_commands, char **env)
 	pid_t	pid;
 
 	if (env)
-		cmd_path = ft_get_path(data->executables[data->executable_pos], env);
+	{
+		if (data->executables[data->executable_pos])
+			cmd_path = ft_get_path(data->executables[data->executable_pos], env);
+		else
+			cmd_path = "unused";
+	}
 	else
 		cmd_path = "unused";
 	signal(SIGINT, SIG_IGN);

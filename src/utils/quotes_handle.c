@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:56:42 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/18 11:02:53 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:51:41 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	exec_counter(char *input)
 		q_flag = 0;
 		while (input[i] == ' ')
 			i++;
-		if (input[i] != '\0')
+		if (input[i] != '\0' && input[i] != '|')
 			exec_count++;
 		if (input[i] == '\'' || input[i] == '"')
 		{
@@ -62,8 +62,8 @@ int	exec_counter(char *input)
 		{
 			if (input[i] == '|')
 			{
-				p_flag = 1;
 				exec_count++;
+				p_flag = 1;
 			}
 			i++;
 		}

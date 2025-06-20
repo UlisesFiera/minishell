@@ -77,6 +77,8 @@ char	**array_cleaner_left(t_gen_data *data) // we get an array with everything b
 
 	symbol = "<;<<;>;>>";
 	count = command_count_without_symbols(data, symbol);
+	if (count == 0)
+		return (NULL);
 	clean_array = malloc(sizeof(char *) * (count + 1));
 	clean_array[count] = NULL;
 	i = 0;

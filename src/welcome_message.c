@@ -14,13 +14,13 @@
 
 void	print_banner(t_gen_data *data)
 {
-	printf("\033[33m");
-	printf("|------------------------------------------------|\n");
+	printf("\033[38;5;22m");
+	printf("--------------------------------------------------\n");
 	printf("|                                                |\n");
 	printf("| Hello, %s                                    |\n", 
 		data->username);
 	printf("|                                                |\n");
-	printf("| Welcome to ulfernan and alvaro's               |\n");
+	printf("| Welcome to ulfernan and asalguer's             |\n");
 	printf("|                                                |\n");
 	printf("|    *                                           |\n");
 	printf("|  (  `                         )       (   (    |\n");
@@ -31,7 +31,7 @@ void	print_banner(t_gen_data *data)
 	printf("| | |\\/| | | || ' \\))| |(_-<| ' \\ / -_)| | | |   |\n");
 	printf("| |_|  |_| |_||_||_| |_|/__/|_||_|\\___||_| |_|   |\n");
 	printf("|                                                |\n");
-	printf("|------------------------------------------------|\n");
+	printf("--------------------------------------------------\n");
 	printf("\033[0m");
 }
 
