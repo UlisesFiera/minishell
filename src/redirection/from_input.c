@@ -26,7 +26,8 @@ void	input_child(char *file, char *cmd_path, t_gen_data *data)
 	}
 	if (!cmd_path)
 	{
-		printf("couldn't find command: %s\n", data->executables[data->executable_pos]);
+		printf("couldn't find command: %s\n",
+			data->executables[data->executable_pos]);
 		if (ft_strcmp(cmd_path, "unused"))
 			free(cmd_path);
 		exit(1);

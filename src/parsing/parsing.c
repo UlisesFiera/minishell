@@ -28,7 +28,7 @@ int	env_var_count(t_gen_data *data, char **env)
 		else if (data->quotes[i] != 2)
 		{
 			j = 0;
-			while(data->executables[i][j])
+			while (data->executables[i][j])
 			{
 				if (data->executables[i][j] == '$')
 					count++;
@@ -51,9 +51,10 @@ void	env_var_check(t_gen_data *data, char **env)
 	env_paths = malloc(sizeof(char *) * (count + 1));
 	env_paths[count] = NULL;
 	replace_env(data, env_paths, env);
+	free(env_paths);
 }
 
-void	null_exec_cleaner(t_gen_data *data)
+/*void	null_exec_cleaner(t_gen_data *data)
 {
 	int		size;
 	int		i;
@@ -88,6 +89,47 @@ void	null_exec_cleaner(t_gen_data *data)
 	free(data->executables);
 	data->executables = data->clean_array;
 	data->quotes = data->updated_quotes;
+} */
+
+void	reposition_arrays(t_gen_data *data, int *exec_count, int i)
+{
+	int	j;
+
+	j = i + 1;
+	while (data->executables[j])
+	{
+		free(data->executables[j]);
+		data->executables[j] = data->executables[j + 1];
+		j++;
+	}
+	(*exec_count)--;
+	j = i + 1;
+	while (j < *exec_count)
+	{
+		data->cat_quotes[j] = data->cat_quotes[j + 1];
+		j++;
+	}
+}
+
+void	cat_executables(t_gen_data *data, int exec_count)
+{
+	int		i;
+	char	*cat_command;
+
+	i = 0;
+	while (i < exec_count)
+	{
+		if (data->cat_quotes[i] == 1)
+		{
+			cat_command = ft_strjoin(
+					data->executables[i], data->executables[i + 1]);
+			free(data->executables[i]);
+			data->executables[i] = ft_strdup(cat_command);
+			free(cat_command);
+			reposition_arrays(data, &exec_count, i);
+		}
+		i++;
+	}
 }
 
 void	parse_input(t_gen_data *data, char **env)
@@ -107,10 +149,11 @@ void	parse_input(t_gen_data *data, char **env)
 	i = 0;
 	while (i < exec_count)
 	{
-		data->executables[i] = exec_split(data->input, &index, i, data);
+		data->executables[i] = exec_split(&index, i, data);
 		i++;
 	}
-	null_exec_cleaner(data);
+	//null_exec_cleaner(data);
 	env_var_check(data, env);
 	set_pipe_flag(data);
+	cat_executables(data, exec_count);
 }

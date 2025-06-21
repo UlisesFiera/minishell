@@ -6,54 +6,83 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:39:09 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/19 15:53:02 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/21 19:57:26 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	exec_size(char *input, int i, char *quotes)
+int	size_calculation(int *i, char *quotes, int command_index, t_gen_data *data)
 {
 	int	size;
 
 	size = 0;
-	while (input[i] == ' ')
-		i++;
-	if (input[i] == '\'' || input[i] == '"')
+	while (data->input[*i] && data->input[*i] != *quotes)
 	{
-		*quotes = input[i];
-		i++;
-	}
-	while (input[i] && input[i] != ' ' && input[i] != *quotes)
-	{
-		if (input[i] == '\'' || input[i] == '"')
+		if (data->input[*i] == ' ' && *quotes == '\0')
+			return (size);
+		if (data->input[*i] == '\'' || data->input[*i] == '"')
 		{
-			if (!find_quote(input, i))
+			if (data->input[*i + 1] == '\'' || data->input[*i + 1] == '"')
+				data->cat_quotes[command_index] = 1;
+			if (!find_quote(data->input, *i))
 				return (size - 1);
 		}
-		else if (input[i] == '|')
+		else if (data->input[*i] == '|')
 		{
 			if (size == 0)
 				size++;
 			return (size);
 		}
 		size++;
-		i++;
+		(*i)++;
 	}
 	return (size);
 }
 
-void	pipe_executable(int *index, char *executable)
+int	exec_size(int i, char *quotes, int command_index, t_gen_data *data)
 {
-	executable[0] = '|';
-	executable[1] = '\0';
-	(*index)++;
+	int	size;
+
+	while (data->input[i] == ' ')
+		i++;
+	if (data->input[i] == '\'' || data->input[i] == '"')
+		*quotes = data->input[i++];
+	size = size_calculation(&i, quotes, command_index, data);
+	if (data->input[i] != '\0')
+	{
+		if (*quotes != '\0'
+			&& (data->input[i + 1] == '\'' || data->input[i + 1] == '"'))
+			data->cat_quotes[command_index] = 1;
+	}
+	return (size);
+}
+
+static void	fill_unquoted(char *executable, char *input, int *index, int *i)
+{
+	while (input[*index] != '\0' && input[*index] != ' ')
+	{
+		if (input[*index] == '\'' || input[*index] == '"')
+		{
+			if (!find_quote(input, *index))
+			{
+				executable[*i] = '\0';
+				return ;
+			}
+		}
+		else if (input[*index] == '|')
+		{
+			executable[*i] = '\0';
+			return ;
+		}
+		executable[(*i)++] = input[(*index)++];
+	}
 }
 
 static void	fill_exec(char *executable, char *input, int *index, char quotes)
 {
 	int	i;
-	
+
 	i = 0;
 	while (input[*index] == ' ')
 		(*index)++;
@@ -71,29 +100,11 @@ static void	fill_exec(char *executable, char *input, int *index, char quotes)
 		return ;
 	}
 	else
-	{
-		while (input[*index] != '\0' && input[*index] != ' ')
-		{
-			if (input[*index] == '\'' || input[*index] == '"')
-			{
-				if (!find_quote(input, *index))
-				{
-					executable[i] = '\0';
-					return ;
-				}
-			}
-			else if (input[*index] == '|')
-			{
-					executable[i] = '\0';
-					return ;
-			}
-			executable[i++] = input[(*index)++];
-		}
-	}
+		fill_unquoted(executable, input, index, &i);
 	executable[i] = '\0';
 }
 
-char	*exec_split(char *input, int *index, int command_index, t_gen_data *data)
+char	*exec_split(int *index, int command_index, t_gen_data *data)
 {
 	char	*executable;
 	char	quotes;
@@ -102,11 +113,11 @@ char	*exec_split(char *input, int *index, int command_index, t_gen_data *data)
 
 	i = *index;
 	quotes = '\0';
-	size = exec_size(input, i, &quotes);
+	size = exec_size(i, &quotes, command_index, data);
 	executable = malloc(sizeof(char) * (size + 1));
 	if (!executable)
 		return (NULL);
-	fill_exec(executable, input, index, quotes);
+	fill_exec(executable, data->input, index, quotes);
 	if (data)
 	{
 		if (quotes == '"')

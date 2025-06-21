@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:03:57 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/19 16:20:16 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/21 19:58:38 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 
 /* Data structs */
 
-extern int	in_secondary_prompt;
+extern int	g_in_secondary_prompt;
 
 typedef struct s_gen_data
 {
@@ -43,6 +43,7 @@ typedef struct s_gen_data
 	char	*input;
 	char	**executables;
 	int		*quotes;
+	int		*cat_quotes;
 	int		pipe_flag;
 	int		input_fd;
 	int		output_fd;
@@ -57,7 +58,9 @@ typedef struct s_gen_data
 	char	**clean_array;
 	int		*updated_quotes;
 	char	**exec_copy;
-} 	t_gen_data;
+	int		env_var_index;
+	int		pipe_end;
+}	t_gen_data;
 
 /* Shell functionalities */
 
@@ -68,7 +71,8 @@ void	free_data(t_gen_data *data);
 void	free_exec(t_gen_data *data);
 void	exec_command(t_gen_data *data, char **env);
 int		exec_counter(char *input);
-char	*exec_split(char *input, int *index, int command_index, t_gen_data *data);
+char	*exec_split(int *index,
+			int command_index, t_gen_data *data);
 int		exec_counter(char *input);
 int		find_quote(char *input, int index);
 char	*ft_get_path(char *cmd, char **env);
@@ -87,16 +91,16 @@ char	*ft_strinsert(char *string, char *insert, int index, int skip);
 void	signal_handler(int signal);
 int		is_only_spaces(char *str);
 char	*expand_env(char *executable, char **env, t_gen_data *data);
-void	set_pipe_flag(t_gen_data *data);
 char	*get_env_var(char *executable, char **env, t_gen_data *data);
-void	parse_env_vars_quotes(t_gen_data *data, char **env, char *command, int index);
+void	parse_env_vars_quotes(t_gen_data *data,
+			char **env, char *command, int index);
 void	replace_env(t_gen_data *data, char **env_paths, char **env);
-void    syntax_error(char *token, t_gen_data *data);
+void	syntax_error(char *token, t_gen_data *data);
 int		ft_is_only_spaces(char *str);
 int		syntax_check(char *line, t_gen_data *data);
 int		find_quote(char *input, int index);
 int		reverse_find_quote(char *input, int index);
-int 	odd_quotes(char *input, int index);
+int		odd_quotes(char *input, int index);
 void	welcome_message(t_gen_data *data);
 void	signal_handler(int signal);
 void	reset_prompt(void);
@@ -109,20 +113,36 @@ void	reset_data(t_gen_data *data);
 
 char	*parse_env_vars(t_gen_data *data, char *line, char **env);
 
+/* Execution */
+
+void	exec_env(t_gen_data *data, char **env);
+void	exec_built(t_gen_data *data, char *command);
+void	execve_handler(char *cmd_path, t_gen_data *data, char **env);
+
 /* Redirections */
 
 int		redirect(t_gen_data *data, char **env);
 void	exec_from_input(t_gen_data *data, int index, char *cmd_path);
 void	exec_to_output(t_gen_data *data, int index, char *cmd_path);
 void	exec_append(t_gen_data *data, int index, char *cmd_path);
-void	exec_heredoc(t_gen_data *data, int index, int count);
+void	exec_heredoc(t_gen_data *data);
 void	generate_heredocs(t_gen_data *data, char **env);
 void	collect_input(t_gen_data *data, int index, int count, char **env);
-void	remove_temps();
+void	remove_temps(void);
 int		find_executable(t_gen_data *data);
+char	**executables_copy(t_gen_data *data);
+int		pipe_index(t_gen_data *data, char **commands);
+void	set_pipe_flag(t_gen_data *data);
+void	pipe_executable(int *index, char *executable);
+void	child_redirect_handler(t_gen_data *data, char **clean_commands,
+			char **env, char *cmd_path);
 
 /* Built-ins */
 
-void	echo(t_gen_data *data, char **commands);
+void	echo(char **commands);
+
+/* Errors */
+
+void	heredoc_error(t_gen_data *data, char *delimiter, int count);
 
 #endif

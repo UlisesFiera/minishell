@@ -16,26 +16,31 @@ SRCS					= src/main.c \
 						  src/parsing/fill_executables.c \
 						  src/init_data.c \
 						  src/free_data.c \
-						  src/exec_command.c \
+						  src/execution/exec_command.c \
+						  src/execution/env_command.c \
+						  src/execution/built_command.c \
 						  src/utils/quotes_handle.c \
 						  src/utils/ft_get_path.c \
 						  src/utils/ft_free_tab.c \
 						  src/utils/ft_get_env.c \
 						  src/utils/ft_strcmp.c \
 						  src/utils/ft_is_only_spaces.c \
-						  src/redirection/redirections.c \
+						  src/redirection/redirect_setup.c \
+						  src/redirection/redirect_child.c \
 						  src/redirection/append.c \
 						  src/redirection/heredoc.c \
 						  src/redirection/from_input.c \
 						  src/redirection/to_output.c \
 						  src/utils/array_cleaner.c \
-						  src/pipes.c \
+						  src/redirection/exec_pipes.c \
+						  src/redirection/pipe_utils.c \
 						  src/utils/file_finder.c \
 						  src/utils/ft_strinsert.c \
 						  src/builts/echo.c \
 						  src/errors.c \
 						  src/welcome_message.c \
 						  src/signal.c \
+						  
 
 
 OBJS					= ${SRCS:.c=.o}

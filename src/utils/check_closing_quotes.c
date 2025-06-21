@@ -6,13 +6,13 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:42:01 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/13 15:43:34 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/21 19:46:46 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	find_quote(char *input, int index) // we check if the quote is grouping a command or if it's single
+int	find_quote(char *input, int index)
 {
 	char	quote;
 
@@ -27,7 +27,7 @@ int	find_quote(char *input, int index) // we check if the quote is grouping a co
 	return (1);
 }
 
-int odd_quotes(char *input, int index)
+int	odd_quotes(char *input, int index)
 {
 	char	quote;
 	int		count;

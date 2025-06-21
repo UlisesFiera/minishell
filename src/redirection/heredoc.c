@@ -25,52 +25,70 @@ char	*file_name_generator(int count)
 	return (final);
 }
 
-void	collect_input(t_gen_data *data, int index, int count, char **env)
+void	*heredoc_write(
+			t_gen_data *data, char *delimiter, int count, char **line)
+{
+	write(data->tmp_fds[count], *line, ft_strlen(*line));
+	write(data->tmp_fds[count], "\n", 1);
+	free(*line);
+	*line = readline("> ");
+	if (!*line)
+	{
+		*line = delimiter;
+		heredoc_error(data, delimiter, count);
+		return (NULL);
+	}
+	return (*line);
+}
+
+char	*heredoc_setup(t_gen_data *data, int index, int count)
 {
 	char	*delimiter;
-	char	*line;
 
 	data->executable_pos = find_executable(data);
 	if (data->executable_pos < 0)
 	{
 		data->exit_status = 1;
-		return ;
+		return (NULL);
 	}
-	delimiter = data->executables[index + 1];
 	data->tmp_filenames[count] = file_name_generator(count);
-	data->tmp_fds[count] = open(data->tmp_filenames[count], O_CREAT | O_RDWR, 0644);
+	data->tmp_fds[count] = open(
+			data->tmp_filenames[count], O_CREAT | O_RDWR, 0644);
+	delimiter = data->executables[index + 1];
+	return (delimiter);
+}
+
+void	collect_input(t_gen_data *data, int index, int count, char **env)
+{
+	char	*delimiter;
+	char	*line;
+
+	delimiter = heredoc_setup(data, index, count);
+	if (!delimiter)
+		return ;
 	line = readline("> ");
 	if (!line)
 	{
-		printf("-minishell: warning: here-document at line %i delimited by end-of-file (wanted %s) heredoc %i\n", data->lineno, delimiter, count);
+		heredoc_error(data, delimiter, count);
 		return ;
 	}
 	if (data->quotes[index + 1] != 2)
 		line = parse_env_vars(data, line, env);
 	while (line && ft_strcmp(line, delimiter))
 	{
-		write(data->tmp_fds[count], line, ft_strlen(line));
-		write(data->tmp_fds[count], "\n", 1);
-		free(line);
-		line = readline("> ");
-		if (!line)
-		{
-			line = delimiter;
-			printf("-minishell: warning: here-document at line %i delimited by end-of-file (wanted %s) heredoc %i\n", data->lineno, delimiter, count);
+		if (!heredoc_write(data, delimiter, count, &line))
 			return ;
-		}
 		if (data->quotes[index + 1] != 2)
 			line = parse_env_vars(data, line, env);
 	}
 	close(data->tmp_fds[count]);
-	data->tmp_fds[count] = open(data->tmp_filenames[count], O_RDONLY, 0644); // must close again in free data
+	data->tmp_fds[count] = open(
+			data->tmp_filenames[count], O_RDONLY, 0644);
 	free(line);
 }
 
-void	exec_heredoc(t_gen_data *data, int index, int count)
+void	exec_heredoc(t_gen_data *data)
 {
-	(void)index;
-	(void)count;
 	int	i;
 	int	final_fd;
 
@@ -87,5 +105,4 @@ void	exec_heredoc(t_gen_data *data, int index, int count)
 		i++;
 	}
 	dup2(final_fd, 0);
-	count++;
 }

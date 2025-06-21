@@ -1,98 +1,213 @@
-==1743== Memcheck, a memory error detector
-==1743== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==1743== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
-==1743== Command: ./minishell
-==1743== 
-==1744== 
-==1744== HEAP SUMMARY:
-==1744==     in use at exit: 246,566 bytes in 1,083 blocks
-==1744==   total heap usage: 1,317 allocs, 234 frees, 276,909 bytes allocated
-==1744== 
-==1744== 5 bytes in 1 blocks are definitely lost in loss record 4 of 92
-==1744==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1744==    by 0x10A560: get_env_var (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x10A839: expand_env (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x109FA7: insert_env_var (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x10A123: parse_env_vars (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x10A1F7: replace_env (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x109C04: env_var_check (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x109EFD: parse_input (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x1095D4: main_loop (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x1096CE: main (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744== 
-==1744== 16 bytes in 1 blocks are definitely lost in loss record 19 of 92
-==1744==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1744==    by 0x109BCE: env_var_check (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x109EFD: parse_input (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x1095D4: main_loop (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x1096CE: main (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744== 
-==1744== 16 bytes in 1 blocks are definitely lost in loss record 20 of 92
-==1744==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1744==    by 0x10A0EC: parse_env_vars (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x10A1F7: replace_env (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x109C04: env_var_check (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x109EFD: parse_input (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x1095D4: main_loop (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744==    by 0x1096CE: main (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1744== 
-==1744== LEAK SUMMARY:
-==1744==    definitely lost: 37 bytes in 3 blocks
-==1744==    indirectly lost: 0 bytes in 0 blocks
-==1744==      possibly lost: 0 bytes in 0 blocks
-==1744==    still reachable: 246,529 bytes in 1,080 blocks
-==1744==         suppressed: 0 bytes in 0 blocks
-==1744== Reachable blocks (those to which a pointer was found) are not shown.
-==1744== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==1744== 
-==1744== For lists of detected and suppressed errors, rerun with: -s
-==1744== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
-==1743== Conditional jump or move depends on uninitialised value(s)
-==1743==    at 0x10B3D8: free_data (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x1096F6: main (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743== 
-==1743== 
-==1743== HEAP SUMMARY:
-==1743==     in use at exit: 246,343 bytes in 1,074 blocks
-==1743==   total heap usage: 1,326 allocs, 252 frees, 346,093 bytes allocated
-==1743== 
-==1743== 5 bytes in 1 blocks are definitely lost in loss record 1 of 83
-==1743==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1743==    by 0x10A560: get_env_var (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x10A839: expand_env (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x109FA7: insert_env_var (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x10A123: parse_env_vars (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x10A1F7: replace_env (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x109C04: env_var_check (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x109EFD: parse_input (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x1095D4: main_loop (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x1096CE: main (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743== 
-==1743== 16 bytes in 1 blocks are definitely lost in loss record 14 of 83
-==1743==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1743==    by 0x109BCE: env_var_check (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x109EFD: parse_input (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x1095D4: main_loop (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x1096CE: main (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743== 
-==1743== 16 bytes in 1 blocks are definitely lost in loss record 15 of 83
-==1743==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1743==    by 0x10A0EC: parse_env_vars (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x10A1F7: replace_env (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x109C04: env_var_check (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x109EFD: parse_input (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x1095D4: main_loop (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743==    by 0x1096CE: main (in /mnt/c/Users/Ulises/Documents/dev/42/wip/minishell/minishell)
-==1743== 
-==1743== LEAK SUMMARY:
-==1743==    definitely lost: 37 bytes in 3 blocks
-==1743==    indirectly lost: 0 bytes in 0 blocks
-==1743==      possibly lost: 0 bytes in 0 blocks
-==1743==    still reachable: 246,306 bytes in 1,071 blocks
-==1743==         suppressed: 0 bytes in 0 blocks
-==1743== Reachable blocks (those to which a pointer was found) are not shown.
-==1743== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==1743== 
-==1743== Use --track-origins=yes to see where uninitialised values come from
-==1743== For lists of detected and suppressed errors, rerun with: -s
-==1743== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
+==31579== Memcheck, a memory error detector
+==31579== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==31579== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==31579== Command: ./minishell
+==31579== 
+==31580== 
+==31580== HEAP SUMMARY:
+==31580==     in use at exit: 257,223 bytes in 1,673 blocks
+==31580==   total heap usage: 1,902 allocs, 229 frees, 291,060 bytes allocated
+==31580== 
+==31580== LEAK SUMMARY:
+==31580==    definitely lost: 0 bytes in 0 blocks
+==31580==    indirectly lost: 0 bytes in 0 blocks
+==31580==      possibly lost: 0 bytes in 0 blocks
+==31580==    still reachable: 257,223 bytes in 1,673 blocks
+==31580==         suppressed: 0 bytes in 0 blocks
+==31580== Reachable blocks (those to which a pointer was found) are not shown.
+==31580== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31580== 
+==31580== For lists of detected and suppressed errors, rerun with: -s
+==31580== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==31581== 
+==31581== HEAP SUMMARY:
+==31581==     in use at exit: 257,222 bytes in 1,673 blocks
+==31581==   total heap usage: 1,923 allocs, 250 frees, 324,151 bytes allocated
+==31581== 
+==31581== LEAK SUMMARY:
+==31581==    definitely lost: 0 bytes in 0 blocks
+==31581==    indirectly lost: 0 bytes in 0 blocks
+==31581==      possibly lost: 0 bytes in 0 blocks
+==31581==    still reachable: 257,222 bytes in 1,673 blocks
+==31581==         suppressed: 0 bytes in 0 blocks
+==31581== Reachable blocks (those to which a pointer was found) are not shown.
+==31581== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31581== 
+==31581== For lists of detected and suppressed errors, rerun with: -s
+==31581== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==31582== 
+==31582== HEAP SUMMARY:
+==31582==     in use at exit: 257,571 bytes in 1,682 blocks
+==31582==   total heap usage: 1,950 allocs, 268 frees, 357,540 bytes allocated
+==31582== 
+==31582== LEAK SUMMARY:
+==31582==    definitely lost: 0 bytes in 0 blocks
+==31582==    indirectly lost: 0 bytes in 0 blocks
+==31582==      possibly lost: 0 bytes in 0 blocks
+==31582==    still reachable: 257,571 bytes in 1,682 blocks
+==31582==         suppressed: 0 bytes in 0 blocks
+==31582== Reachable blocks (those to which a pointer was found) are not shown.
+==31582== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31582== 
+==31582== For lists of detected and suppressed errors, rerun with: -s
+==31582== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==31583== 
+==31583== HEAP SUMMARY:
+==31583==     in use at exit: 257,580 bytes in 1,684 blocks
+==31583==   total heap usage: 1,966 allocs, 282 frees, 390,547 bytes allocated
+==31583== 
+==31583== LEAK SUMMARY:
+==31583==    definitely lost: 0 bytes in 0 blocks
+==31583==    indirectly lost: 0 bytes in 0 blocks
+==31583==      possibly lost: 0 bytes in 0 blocks
+==31583==    still reachable: 257,580 bytes in 1,684 blocks
+==31583==         suppressed: 0 bytes in 0 blocks
+==31583== Reachable blocks (those to which a pointer was found) are not shown.
+==31583== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31583== 
+==31583== For lists of detected and suppressed errors, rerun with: -s
+==31583== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==31584== 
+==31584== HEAP SUMMARY:
+==31584==     in use at exit: 257,624 bytes in 1,687 blocks
+==31584==   total heap usage: 1,982 allocs, 295 frees, 423,554 bytes allocated
+==31584== 
+==31584== LEAK SUMMARY:
+==31584==    definitely lost: 0 bytes in 0 blocks
+==31584==    indirectly lost: 0 bytes in 0 blocks
+==31584==      possibly lost: 0 bytes in 0 blocks
+==31584==    still reachable: 257,624 bytes in 1,687 blocks
+==31584==         suppressed: 0 bytes in 0 blocks
+==31584== Reachable blocks (those to which a pointer was found) are not shown.
+==31584== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31584== 
+==31584== For lists of detected and suppressed errors, rerun with: -s
+==31584== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==31585== 
+==31585== HEAP SUMMARY:
+==31585==     in use at exit: 257,682 bytes in 1,691 blocks
+==31585==   total heap usage: 2,005 allocs, 314 frees, 456,666 bytes allocated
+==31585== 
+==31585== LEAK SUMMARY:
+==31585==    definitely lost: 0 bytes in 0 blocks
+==31585==    indirectly lost: 0 bytes in 0 blocks
+==31585==      possibly lost: 0 bytes in 0 blocks
+==31585==    still reachable: 257,682 bytes in 1,691 blocks
+==31585==         suppressed: 0 bytes in 0 blocks
+==31585== Reachable blocks (those to which a pointer was found) are not shown.
+==31585== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31585== 
+==31585== For lists of detected and suppressed errors, rerun with: -s
+==31585== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==31586== 
+==31586== HEAP SUMMARY:
+==31586==     in use at exit: 257,679 bytes in 1,691 blocks
+==31586==   total heap usage: 2,020 allocs, 329 frees, 489,680 bytes allocated
+==31586== 
+==31586== LEAK SUMMARY:
+==31586==    definitely lost: 0 bytes in 0 blocks
+==31586==    indirectly lost: 0 bytes in 0 blocks
+==31586==      possibly lost: 0 bytes in 0 blocks
+==31586==    still reachable: 257,679 bytes in 1,691 blocks
+==31586==         suppressed: 0 bytes in 0 blocks
+==31586== Reachable blocks (those to which a pointer was found) are not shown.
+==31586== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31586== 
+==31586== For lists of detected and suppressed errors, rerun with: -s
+==31586== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==31587== 
+==31587== HEAP SUMMARY:
+==31587==     in use at exit: 257,762 bytes in 1,697 blocks
+==31587==   total heap usage: 2,043 allocs, 346 frees, 522,792 bytes allocated
+==31587== 
+==31587== LEAK SUMMARY:
+==31587==    definitely lost: 0 bytes in 0 blocks
+==31587==    indirectly lost: 0 bytes in 0 blocks
+==31587==      possibly lost: 0 bytes in 0 blocks
+==31587==    still reachable: 257,762 bytes in 1,697 blocks
+==31587==         suppressed: 0 bytes in 0 blocks
+==31587== Reachable blocks (those to which a pointer was found) are not shown.
+==31587== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31587== 
+==31587== For lists of detected and suppressed errors, rerun with: -s
+==31587== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==31588== 
+==31588== HEAP SUMMARY:
+==31588==     in use at exit: 257,809 bytes in 1,700 blocks
+==31588==   total heap usage: 2,060 allocs, 360 frees, 555,824 bytes allocated
+==31588== 
+==31588== LEAK SUMMARY:
+==31588==    definitely lost: 0 bytes in 0 blocks
+==31588==    indirectly lost: 0 bytes in 0 blocks
+==31588==      possibly lost: 0 bytes in 0 blocks
+==31588==    still reachable: 257,809 bytes in 1,700 blocks
+==31588==         suppressed: 0 bytes in 0 blocks
+==31588== Reachable blocks (those to which a pointer was found) are not shown.
+==31588== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31588== 
+==31588== For lists of detected and suppressed errors, rerun with: -s
+==31588== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==31589== 
+==31589== HEAP SUMMARY:
+==31589==     in use at exit: 257,856 bytes in 1,703 blocks
+==31589==   total heap usage: 2,077 allocs, 374 frees, 588,856 bytes allocated
+==31589== 
+==31589== LEAK SUMMARY:
+==31589==    definitely lost: 0 bytes in 0 blocks
+==31589==    indirectly lost: 0 bytes in 0 blocks
+==31589==      possibly lost: 0 bytes in 0 blocks
+==31589==    still reachable: 257,856 bytes in 1,703 blocks
+==31589==         suppressed: 0 bytes in 0 blocks
+==31589== Reachable blocks (those to which a pointer was found) are not shown.
+==31589== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31589== 
+==31589== For lists of detected and suppressed errors, rerun with: -s
+==31589== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==31590== 
+==31590== HEAP SUMMARY:
+==31590==     in use at exit: 257,903 bytes in 1,706 blocks
+==31590==   total heap usage: 2,094 allocs, 388 frees, 621,888 bytes allocated
+==31590== 
+==31590== LEAK SUMMARY:
+==31590==    definitely lost: 0 bytes in 0 blocks
+==31590==    indirectly lost: 0 bytes in 0 blocks
+==31590==      possibly lost: 0 bytes in 0 blocks
+==31590==    still reachable: 257,903 bytes in 1,706 blocks
+==31590==         suppressed: 0 bytes in 0 blocks
+==31590== Reachable blocks (those to which a pointer was found) are not shown.
+==31590== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31590== 
+==31590== For lists of detected and suppressed errors, rerun with: -s
+==31590== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==31591== 
+==31591== HEAP SUMMARY:
+==31591==     in use at exit: 257,885 bytes in 1,705 blocks
+==31591==   total heap usage: 2,131 allocs, 426 frees, 655,344 bytes allocated
+==31591== 
+==31591== LEAK SUMMARY:
+==31591==    definitely lost: 0 bytes in 0 blocks
+==31591==    indirectly lost: 0 bytes in 0 blocks
+==31591==      possibly lost: 0 bytes in 0 blocks
+==31591==    still reachable: 257,885 bytes in 1,705 blocks
+==31591==         suppressed: 0 bytes in 0 blocks
+==31591== Reachable blocks (those to which a pointer was found) are not shown.
+==31591== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31591== 
+==31591== For lists of detected and suppressed errors, rerun with: -s
+==31591== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==31579== 
+==31579== HEAP SUMMARY:
+==31579==     in use at exit: 257,685 bytes in 1,698 blocks
+==31579==   total heap usage: 2,142 allocs, 444 frees, 728,220 bytes allocated
+==31579== 
+==31579== LEAK SUMMARY:
+==31579==    definitely lost: 0 bytes in 0 blocks
+==31579==    indirectly lost: 0 bytes in 0 blocks
+==31579==      possibly lost: 0 bytes in 0 blocks
+==31579==    still reachable: 257,685 bytes in 1,698 blocks
+==31579==         suppressed: 0 bytes in 0 blocks
+==31579== Reachable blocks (those to which a pointer was found) are not shown.
+==31579== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31579== 
+==31579== For lists of detected and suppressed errors, rerun with: -s
+==31579== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

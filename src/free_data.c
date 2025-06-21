@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 09:24:20 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/19 16:22:47 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/21 17:48:05 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,17 @@ void	free_exec(t_gen_data *data)
 	}
 }
 
-void	remove_temps()
+void	remove_temps(void)
 {
-	DIR 			*dir;
+	DIR				*dir;
 	struct dirent	*entry;
 	char			*full_path;
 
 	dir = opendir("./tmp");
 	if (!dir)
 		return ;
-	while ((entry = readdir(dir)))
+	entry = readdir(dir);
+	while ((entry))
 	{
 		if (strncmp(entry->d_name, "heredoc_tmp_", 12) == 0)
 		{
@@ -61,6 +62,7 @@ void	remove_temps()
 			unlink(full_path);
 			free(full_path);
 		}
+		entry = readdir(dir);
 	}
 	closedir(dir);
 }
@@ -93,6 +95,11 @@ void	reset_data(t_gen_data *data)
 	{
 		free(data->quotes);
 		data->quotes = NULL;
+	}
+	if (data->cat_quotes)
+	{
+		free(data->cat_quotes);
+		data->cat_quotes = NULL;
 	}
 	data->pipe_flag = 0;
 	data->pipe_index = 0;

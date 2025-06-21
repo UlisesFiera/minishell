@@ -26,24 +26,12 @@ char	*ft_strinsert(char *string, char *insert, int index, int skip)
 	j = 0;
 	n = 0;
 	while (i < index)
-	{
-		new_string[n] = string[i];
-		n++;
-		i++;
-	}
+		new_string[n++] = string[i++];
 	while (insert[j])
-	{
-		new_string[n] = insert[j];
-		n++;
-		j++;
-	}
+		new_string[n++] = insert[j++];
 	i = index + skip;
 	while (string[i])
-	{
-		new_string[n] = string[i];
-		n++;
-		i++;
-	}
+		new_string[n++] = string[i++];
 	new_string[n] = '\0';
 	return (new_string);
 }

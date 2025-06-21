@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 08:47:54 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/06/19 11:01:11 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/06/21 15:58:02 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ void	init_quotes(t_gen_data *data, int exec_count)
 	int	i;
 
 	data->quotes = malloc(sizeof(int) * (exec_count));
+	data->cat_quotes = malloc(sizeof(int) * (exec_count));
 	i = 0;
 	while (i < exec_count)
 	{
 		data->quotes[i] = 0;
+		data->cat_quotes[i] = 0;
 		i++;
 	}
 }
@@ -29,7 +31,7 @@ void	generate_heredocs(t_gen_data *data, char **env)
 {
 	int	i;
 	int	count;
-	
+
 	count = 0;
 	i = 0;
 	while (data->executables[i])
@@ -47,10 +49,7 @@ void	generate_heredocs(t_gen_data *data, char **env)
 	while (data->executables[i])
 	{
 		if (!ft_strcmp(data->executables[i], "<<"))
-		{
-			collect_input(data, i, count, env);
-			count++;
-		}
+			collect_input(data, i, count++, env);
 		i++;
 	}
 }
@@ -82,12 +81,13 @@ void	*init_data_handler(t_gen_data *data)
 	data->input = ft_strdup("");
 	if (!data->input)
 		return (NULL);
-	data->input[0] = '\0'; 
+	data->input[0] = '\0';
 	if (!load_username(data))
 		return (NULL);
 	data->tmp_filenames = NULL;
 	data->tmp_fds = NULL;
 	data->executables = NULL;
+	data->exec_copy = NULL;
 	data->pipe_flag = 0;
 	data->input_fd = -1;
 	data->output_fd = -1;

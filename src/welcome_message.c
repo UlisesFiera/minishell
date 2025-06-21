@@ -17,7 +17,7 @@ void	print_banner(t_gen_data *data)
 	printf("\033[38;5;22m");
 	printf("--------------------------------------------------\n");
 	printf("|                                                |\n");
-	printf("| Hello, %s                                    |\n", 
+	printf("| Hello, %s                                    |\n",
 		data->username);
 	printf("|                                                |\n");
 	printf("| Welcome to ulfernan and asalguer's             |\n");

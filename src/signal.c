@@ -15,16 +15,16 @@
 void	reset_prompt(void)
 {
 	write(1, "\n", 1);
-	rl_on_new_line(); // this tells the readline lib that the cursor where it will start reading from is on a new line
-	rl_replace_line("", 0); // clears the readline buffer that stores the input
-	rl_redisplay();  // redraws the prompt
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 void	signal_handler(int signum)
 {
-	if (signum == SIGINT && isatty(0) && in_secondary_prompt == 0)
+	if (signum == SIGINT && isatty(0) && g_in_secondary_prompt == 0)
 		reset_prompt();
-	if (signum == SIGINT && isatty(0) && in_secondary_prompt == 1)
+	if (signum == SIGINT && isatty(0) && g_in_secondary_prompt == 1)
 		close(0);
 }
 

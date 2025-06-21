@@ -25,7 +25,7 @@ char	**pipe_divider(char **commands, int index)
 	int		i;
 	int		j;
 
-	i = index - 1; // we skip the | or \0 moving to the left as we will copy from there to the left
+	i = index - 1;
 	size = 0;
 	while (i >= 0 && commands[i] && commands[i][0] != '|')
 	{
@@ -56,7 +56,7 @@ int	command_count_without_symbols(t_gen_data *data, char *symbol)
 	count = 0;
 	while (data->executables[i] && data->executables[i][0] != '|')
 	{
-		while (ft_strnstr(symbol, data->executables[i], ft_strlen(symbol))) // we skip 2 because whats right after a symbol is always a file, hence not a valid arg for the command
+		while (ft_strnstr(symbol, data->executables[i], ft_strlen(symbol)))
 			i += 2;
 		if ((data->executables[i]))
 		{
@@ -67,7 +67,7 @@ int	command_count_without_symbols(t_gen_data *data, char *symbol)
 	return (count);
 }
 
-char	**array_cleaner_left(t_gen_data *data) // we get an array with everything but redirectors, until pipe
+char	**array_cleaner_left(t_gen_data *data)
 {
 	char	**clean_array;
 	char	*symbol;
@@ -96,7 +96,7 @@ char	**array_cleaner_left(t_gen_data *data) // we get an array with everything b
 	return (clean_array);
 }
 
-char	**array_cleaner_right(t_gen_data *data, int optcode, char *symbol) // this gives us an array with everything from the special symbol
+char	**array_cleaner_right(t_gen_data *data, int optcode, char *symbol)
 {
 	char	**clean_array;
 	int		i;
@@ -107,7 +107,7 @@ char	**array_cleaner_right(t_gen_data *data, int optcode, char *symbol) // this 
 	while (ft_strcmp(symbol, data->executables[i]))
 		i++;
 	i++;
-	if (optcode == 1) //optcode will be 1 when the first arg after the symbol is a file, in that case we skip it
+	if (optcode == 1)
 		i++;
 	n = i;
 	j = 0;

@@ -12,17 +12,25 @@
 
 #include "../minishell.h"
 
-void	echo(t_gen_data *data, char **commands)
+void	echo(char **commands)
 {
-	int		i;
+	int	jump;
+	int	i;
 
-	(void)data;
+	jump = 0;
 	i = 1;
 	while (commands[i])
 	{
+		if (!ft_strcmp(commands[i], "-n"))
+		{
+			i++;
+			jump = 1;
+		}
 		write(1, commands[i], ft_strlen(commands[i]));
-		if (!commands[i + 1])
+		if (!commands[i + 1] && !jump)
 			write(1, "\n", 1);
+		else if (commands[i + 1])
+			write(1, " ", 1);
 		i++;
 	}
 	exit(0);
